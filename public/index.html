@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatMice-like Web Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f5f8; /* Light blue background */
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            background-color: #ffffff; /* White container */
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            color: #0077cc; /* MatMice blue color */
+            text-align: center;
+        }
+
+        form {
+            background-color: #ffffff; /* White form background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: calc(100% - 16px); /* Adjust for padding */
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #0077cc; /* MatMice blue color */
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005580; /* Darker blue on hover */
+        }
+
+        .lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #b0d3f4; /* Light blue line color */
+        }
+
+        .line:nth-child(2) {
+            top: 25%;
+        }
+
+        .line:nth-child(3) {
+            top: 50%;
+        }
+
+        .line:nth-child(4) {
+            top: 75%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Navigation buttons -->
+        <div id="nav-buttons">
+            <button onclick="goToPreviousPage()">Go back page</button>
+            <button onclick="goToNextPage()">Go to next page</button>
+            <button onclick="goToRandomPage()">Go to random page</button>
+        </div>
+
+        <h1>MatMice-like Web Maker</h1>
+        <form action="/register/{{username}}" method="post" id="registerForm">
+            <label for="username">Choose a username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="snippet">Your HTML, CSS, or JavaScript:</label>
+            <textarea id="snippet" name="snippet" rows="10" required></textarea>
+            <br>
+            <input type="submit" value="Create Website">
+        </form>
+    </div>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            const username = document.getElementById('username').value;
+            const snippet = document.getElementById('snippet').value;
+            this.action = `/register/${username}?snippet=${encodeURIComponent(snippet)}`;
+        });
+
+        // Function to navigate to the previous page
+        function goToPreviousPage() {
+            // Implement logic to navigate to the previous page
+            alert("Going to previous page");
+        }
+
+        // Function to navigate to the next page
+        function goToNextPage() {
+            // Implement logic to navigate to the next page
+            alert("Going to next page");
+        }
+
+        // Function to navigate to a random page
+        function goToRandomPage() {
+            // Implement logic to navigate to a random page
+            alert("Going to random page");
+        }
+    </script>
+</body
+</html>
