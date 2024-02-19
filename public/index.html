@@ -135,9 +135,30 @@
 
         // Function to navigate to a random page
         function goToRandomPage() {
-            // Implement logic to navigate to a random page
-            alert("Going to random page");
-        }
+        fetch('/random/page')
+            .then(response => {
+            	console.log(response);
+                if (response.ok) {
+               		return response.url;
+                    //return response.text();
+                } else {
+                    throw new Error('Failed to fetch random page');
+                }
+            })
+            .then(url => {
+            	//console.log(username);
+                if (url !== '') {
+                    // Redirect to the randomly selected page
+                    window.location.href = url;
+                } else {
+                    alert('No pages available');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Failed to fetch random page');
+            });
+    }
     </script>
 </body
 </html>
