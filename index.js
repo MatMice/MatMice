@@ -1,11 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const DOMPurify = require('dompurify');
+const validator = require('validator');
+const helmet = require('helmet');
+
 
 const app = express();
 const port = 3000;
 
+app.use(helmet());
 app.use(bodyParser.text({ type: 'text/*' }));
 app.use(express.static('public'));
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error');
+});
 
 const storedSnippets = {};
 
@@ -72,7 +81,10 @@ app.get('/', (req, res) => {
 
 app.post('/register/:username', (req, res) => {
     const username = req.params.username;
-    const snippet = req.query.snippet;
+    let snippet = req.query.snippet;
+
+    // Sanitize the snippet using DOMPurify
+    snippet = DOMPurify.sanitize(snippet);
 
     if (storedSnippets[username]) {
         res.status(409).send('Username already taken');
@@ -87,13 +99,18 @@ app.get('/random/page', (req, res) => {
     const usernames = Object.keys(storedSnippets);
     if (usernames.length > 0) {
         const randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
-        console.log(randomUsername)
-        console.log(`/${randomUsername}`);
-        res.redirect(`/${randomUsername}`);
+
+        // Validate the randomUsername before redirection
+        if (validator.isAlphanumeric(randomUsername)) {
+            res.redirect(`/${randomUsername}`);
+        } else {
+            res.status(500).send('Invalid username for redirection');
+        }
     } else {
         res.status(404).send('No pages available');
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
