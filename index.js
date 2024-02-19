@@ -1,15 +1,21 @@
+// Made with the help of ChatGPT 3.5
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const DOMPurify = require('dompurify');
+const createDOMPurify = require('dompurify');
 const validator = require('validator');
 const helmet = require('helmet');
+const { JSDOM } = require('jsdom');
 
 
 const app = express();
 const port = 3000;
 
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
 app.use(helmet());
-app.use(bodyParser.text({ type: 'text/*' }));
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static('public'));
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -21,6 +27,7 @@ const storedSnippets = {};
 app.get('/:username', (req, res) => {
     const username = req.params.username;
     const snippet = storedSnippets[username];
+    console.log(snippet)
     if (snippet) {
         res.send(`
             <!DOCTYPE html>
@@ -79,13 +86,16 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.post('/register/:username', (req, res) => {
-    const username = req.params.username;
-    let snippet = req.query.snippet;
-
+app.post('/register', (req, res) => {
+console.log(req)
+      const username = req.body.username;
+    let snippet = req.body.snippet;
     // Sanitize the snippet using DOMPurify
     snippet = DOMPurify.sanitize(snippet);
 
+console.log("text")
+console.log(username)
+console.log(snippet)
     if (storedSnippets[username]) {
         res.status(409).send('Username already taken');
     } else {
@@ -93,7 +103,6 @@ app.post('/register/:username', (req, res) => {
         res.redirect(`/${username}`);
     }
 });
-
 // New endpoint to handle random page request
 app.get('/random/page', (req, res) => {
     const usernames = Object.keys(storedSnippets);
