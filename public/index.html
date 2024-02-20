@@ -15,7 +15,7 @@
         	}
 	
         	#container {
-            	background-color: #ffffff; /* White container */
+            	background-color: #f1f5f8; /* White container */
             	max-width: 800px;
             	margin: 20px auto;
             	padding: 20px;
@@ -90,6 +90,7 @@
     	</style>
 	</head>
 	<body>
+
     	<div id="container">
         	<!-- Navigation buttons -->
         	<div id="nav-buttons">
@@ -103,13 +104,14 @@
         	</div>
 	
         	<h1>MatMice ~ Kids Web Development Tool</h1>
-        	<p>This product will be free to use forever but is currently underconstruction. All sites currently created will be deleted!</p>
+        	<p>This product will be free to use forever but is currently underconstruction. All sites currently created will be deleted! You may submit 1 page per minute and prompt once per minute. Please note this site will change so bear with us in functionality!</p>
         	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
 	
             	<label for="username">Choose a username:</label>
             	<input type="text" id="username" name="username" required>
             	<br>
-            	            <!-- HTML Textarea -->
+            	
+            	<!-- HTML Textarea -->
             	<label for="htmlSnippet">Your HTML:</label>
             	<textarea id="htmlSnippet" name="htmlSnippet" rows="10" required></textarea>
             	<br>
@@ -126,6 +128,26 @@
 
             	<input type="submit" value="Create Website">
         	</form>
+        	<div id="container">
+        	
+        	<form action="/prompt" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
+	
+            	
+        <label for="prompt">Prompt (1 request per minute currently!):</label>
+        <input type="text" id="prompt" name="prompt">
+            	<input type="submit" value="Prompt AI">
+        	</form>
+        
+        <div id="output-html">
+            <h2>Generated HTML suggestions:</h2>
+            <div id="html-content"></div>
+        </div>
+
+        <div id="output-css">
+            <h2>Generated CSS suggestions:</h2>
+            <div id="css-content"></div>
+        </div>
+    </div>
     	</div>
     	<div class="lines">
         	<div class="line"></div>
