@@ -93,21 +93,37 @@
     	<div id="container">
         	<!-- Navigation buttons -->
         	<div id="nav-buttons">
-        		<h3> Features Coming Soon.... </h3>
-            	<button>Go back page</button>
-            	<button>Go to next page</button>
-            	<button>Go to random page</button>
+            	<a href="/">Home</a> |
+            	<a href="/signup">Signup</a> |
+            	<a href="/members">Members</a> |
+            	<a href="/cool-pages">Cool Pages</a> |
+            	<a href="/grownups">Grownups</a> |
+            	<a href="/about">About</a> |
+            	<a href="/help">Help</a>
         	</div>
 	
-        	<h1>MatMice ~ Web</h1>
+        	<h1>MatMice ~ Kids Web Development Tool</h1>
+        	<p>This product will be free to use forever but is currently underconstruction. All sites currently created will be deleted!</p>
         	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
 	
             	<label for="username">Choose a username:</label>
             	<input type="text" id="username" name="username" required>
             	<br>
-            	<label for="snippet">Your HTML, CSS, or JavaScript:</label>
-            	<textarea id="snippet" name="snippet" rows="10" required></textarea>
+            	            <!-- HTML Textarea -->
+            	<label for="htmlSnippet">Your HTML:</label>
+            	<textarea id="htmlSnippet" name="htmlSnippet" rows="10" required></textarea>
             	<br>
+	
+            	<!-- CSS Textarea -->
+            	<label for="cssSnippet">Your CSS:</label>
+            	<textarea id="cssSnippet" name="cssSnippet" rows="10" required></textarea>
+            	<br>
+	
+            	<!-- JavaScript Textarea -->
+            	<label for="jsSnippet">Your JavaScript (Currently not working!):</label>
+            	<textarea id="jsSnippet" name="jsSnippet" rows="10" required></textarea>
+            	<br>
+
             	<input type="submit" value="Create Website">
         	</form>
     	</div>
