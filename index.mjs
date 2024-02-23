@@ -201,6 +201,7 @@ app.post('/register', async (req, res) => {
 
     // Create the snippet object
     const snippet = {
+        prompt: prompt,
         htmlSnippet: minifyHtmlSnippet(DOMPurify.sanitize(htmlSnippet)),
         cssSnippet: cssSnippet,
         jsSnippet: jsSnippet,
