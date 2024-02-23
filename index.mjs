@@ -161,7 +161,18 @@ app.get('/', (req, res) => {
 app.post('/register', async (req, res) => {
     
     const username = req.body.username;
-
+    try {
+        const exists = await client.exists(username);
+        if (exists === 1) {
+            res.status(400).send('Username already exists');
+            return;
+        }
+        // Continue with your logic if the username does not exist
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+    }
     let htmlSnippet = req.body.htmlSnippet;
     let cssSnippet = req.body.cssSnippet;
     let jsSnippet = req.body.jsSnippet;
