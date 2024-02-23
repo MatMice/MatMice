@@ -63,7 +63,7 @@ const sanitizeJs = async (js) => {
     const hasCriticalIssue = results.some(result => result.messages.some(message => message.severity === 2));
     if (hasCriticalIssue) {
         console.log(`JavaScript code has critical issues:\n${resultText}`);
-        return '';
+        //return '';
     }
     if (results.some(result => result.errorCount > 0)) {
         console.log(`JavaScript code has errors:\n${resultText}`);
@@ -178,11 +178,13 @@ app.post('/register', async (req, res) => {
     let jsSnippet = req.body.jsSnippet;
 
     let prompt = req.body.prompt;
+    let promptResponse = "";
     if(prompt.length > 0 ) {
         console.log("HERE");
         let prompt = req.body.prompt;
         let apiData = await promptGemini(prompt);
         console.log(apiData);
+        promptResponse = apiData;
         let parsedData = parseApiResponse(apiData);
         console.log(parsedData);
         htmlSnippet = parsedData.htmlCode;
@@ -201,6 +203,7 @@ app.post('/register', async (req, res) => {
 
     // Create the snippet object
     const snippet = {
+        promptResponse: promptResponse, //Not gunna stay
         prompt: prompt,
         htmlSnippet: minifyHtmlSnippet(DOMPurify.sanitize(htmlSnippet)),
         cssSnippet: cssSnippet,
