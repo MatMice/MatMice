@@ -159,14 +159,29 @@ app.get('/', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
+    
     const username = req.body.username;
+
     let htmlSnippet = req.body.htmlSnippet;
     let cssSnippet = req.body.cssSnippet;
-    cssSnippet = await minifyCss(DOMPurify.sanitize(cssSnippet));
     let jsSnippet = req.body.jsSnippet;
-    console.log(jsSnippet)
-    jsSnippet = await sanitizeJs(jsSnippet) || '';
 
+    let prompt = req.body.prompt;
+    if(prompt.length > 0 ) {
+        console.log("HERE");
+        let prompt = req.body.prompt;
+        let apiData = await promptGemini(prompt);
+        console.log(apiData);
+        let parsedData = parseApiResponse(apiData);
+        console.log(parsedData);
+        htmlSnippet = parsedData.htmlCode;
+        cssSnippet = parsedData.cssCode;
+        jsSnippet = parsedData.jsCode;
+    }
+    
+    cssSnippet = DOMPurify.sanitize(cssSnippet) || '';
+    jsSnippet = await sanitizeJs(jsSnippet) || '';
+    
     console.log(jsSnippet)
     // Calculate SHA-256 hash for CSS snippet
     const cssHash = crypto.createHash('sha256').update(cssSnippet).digest('base64');
@@ -226,6 +241,59 @@ const startServer = async () => {
         console.error('Failed to connect to Redis:', err);
     }
 };
+async function promptGemini(prompt) {
+    console.log(prompt)
+    const apiKey = process.env.GOOGLE_API_KEY;
 
+try {
+    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            contents: [{
+                parts: [{
+                    text: `Please respond with three code blocks html,css,and js to make a website with the following prompt:${prompt}`,
+                }],
+            }],
+        }),
+    });
+
+    if (apiResponse.ok) {
+        const apiData = await apiResponse.json();
+        // Handle the API response as needed
+
+        return apiData;
+        //res.status(200).json(apiData); // Send the API response back to the client or perform further processing
+    } else {
+        throw new Error(`API request failed with status: ${apiResponse.status}`);
+    }
+} catch (error) {
+    console.error('Error making API request:', error);
+    res.status(500).send('Internal Server Error');
+}
+}
+app.post('/prompt',async (request, res) => {
+//
+})
+
+function parseApiResponse(apiData) {
+    const text = apiData.candidates[0].content.parts[0].text;
+
+    const htmlMatch = text.match(/```html\n([\s\S]*?)```/);
+    const cssMatch = text.match(/```css\n([\s\S]*?)```/);
+    const jsMatch = text.match(/```javascript\n([\s\S]*?)```/);
+
+    const htmlCode = htmlMatch ? htmlMatch[1] : '';
+    const cssCode = cssMatch ? cssMatch[1] : '';
+    const jsCode = jsMatch ? jsMatch[1] : '';
+
+    return {
+        htmlCode,
+        cssCode,
+        jsCode,
+    };
+}
 // Call the function to start the server
 startServer();

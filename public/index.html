@@ -106,7 +106,14 @@
         	</div>
 	
         	<h1>MatMice ~ Kids Web Development Tool</h1>
-        	<p>This product will be free to use forever but is currently underconstruction. All sites currently created will be deleted! You may submit 1 page per minute and prompt once per minute. Please note this site will change so bear with us in functionality!</p>
+        	<p>
+				This product is currently in its development phase and is available for use 
+				free of charge, indefinitely. Please be aware that all sites created at this 
+				time will be subject to deletion. To maintain system integrity, we kindly request
+				that you limit your submissions to one page per minute and one prompt per minute.
+				We appreciate your understanding and patience as we continue to enhance and refine
+				our site's functionality.
+			</p>
         	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
 	
             	<label for="username">Choose a username:</label>
@@ -128,27 +135,14 @@
             	<textarea id="jsSnippet" name="jsSnippet" rows="10" required></textarea>
             	<br>
 
+				<label for="prompt">Leave empty for no AI modification</label>
+				<input type="text" id="prompt" name="prompt">
+
             	<input type="submit" value="Create Website">
         	</form>
         	<div id="container">
         	
-        	<form action="/prompt" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
-	
-            	
-        <label for="prompt">Prompt (1 request per minute currently!):</label>
-        <input type="text" id="prompt" name="prompt">
-            	<input type="submit" value="Prompt AI">
-        	</form>
         
-        <div id="output-html">
-            <h2>Generated HTML suggestions:</h2>
-            <div id="html-content"></div>
-        </div>
-
-        <div id="output-css">
-            <h2>Generated CSS suggestions:</h2>
-            <div id="css-content"></div>
-        </div>
     </div>
     	</div>
     	<div class="lines">
