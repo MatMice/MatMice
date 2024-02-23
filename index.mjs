@@ -44,6 +44,26 @@ app.use((err, req, res, next) => {
 });
 
 
+app.get('/generateAudio', async (req, res) => {
+    //const { text, voice_id, model_id, pronunciation_dictionary_locators } = req.body;
+
+    const options = {
+        method: 'POST',
+        headers: {'xi-api-key':  process.env.ELEVENLAB_API_KEY, 'Content-Type': 'application/json'},
+        body: '{"model_id":"eleven_monolingual_v1","text":"test","voice_settings":{"stability":0.5,"similarity_boost":0.5}}'
+      };
+      
+
+    try {
+        const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${process.env.ELEVENLABS_VOICE_ID}`, options);
+        console.log(response);
+        res.send(response)
+        
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to generate audio' });
+    }
+});
 //
 const eslint = new ESLint({
     useEslintrc: false,

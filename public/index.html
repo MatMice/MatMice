@@ -89,6 +89,13 @@
         	.line:nth-child(4) {
             	top: 75%;
         	}
+			#playAudioParagraph {
+				cursor: pointer;
+				transition: background-color 0.3s ease;
+			}
+			#playAudioParagraph:hover {
+				background-color: #4473f5;
+			}
     	</style>
 	</head>
 	<body>
@@ -107,7 +114,7 @@
         	</div>
 	
         	<h1>MatMice ~ Kids Web Development Tool</h1>
-        	<p>
+        	<p id="playAudioParagraph" title="Click here to read as audio">
 				This product is currently in its development phase and is available for use 
 				free of charge, indefinitely. Please be aware that all sites created at this 
 				time will be subject to deletion. To maintain system integrity, we kindly request
@@ -115,6 +122,9 @@
 				We appreciate your understanding and patience as we continue to enhance and refine
 				our site's functionality.
 			</p>
+			<audio id="welcomeAudio" src="/welcome.mp3" type="audio/mpeg" style="display: none;">
+				Your browser does not support the audio element.
+			</audio>
         	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
 	
             	<label for="username">Choose a username:</label>
@@ -157,4 +167,6 @@
 			<p>&copy; 2024 MatMice.Site All rights reserved. (Not affiliated with matmice.com or any other page!)</p>
 		</footer>
 	</body>
+	<script src="/script.js">
+	</script>
 </html>
