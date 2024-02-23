@@ -269,7 +269,7 @@ try {
         body: JSON.stringify({
             contents: [{
                 parts: [{
-                    text: `Please respond with three code blocks html,css,and js to make a website with the following prompt:${prompt}`,
+                    text: `Please respond with three code blocks html,css,and js without any comments to make a website with the following prompt:${prompt}`,
                 }],
             }],
         }),
