@@ -69,7 +69,7 @@ const sanitizeJs = async (js) => {
         console.log(`JavaScript code has errors:\n${resultText}`);
     }
 
-    return js.replace(/\s/g, '');
+    return js;
 };
 
 // Apply rate limiting for /prompt and /register routes
@@ -298,8 +298,10 @@ function parseApiResponse(apiData) {
 
     const htmlMatch = text.match(/```html\n([\s\S]*?)```/);
     const cssMatch = text.match(/```css\n([\s\S]*?)```/);
-    const jsMatch = text.match(/```javascript\n([\s\S]*?)```/);
-
+    const jsMatch = text.match(/```javascript\n([\s\S]*?)```/) || text.match(/```js\n([\s\S]*?)```/);
+    console.log("JERERE")
+    console.log(jsMatch);
+    //const jsMatch = text.match(/```(javascript|js)\n([\s\S]*?)```/);
     const htmlCode = htmlMatch ? htmlMatch[1] : '';
     const cssCode = cssMatch ? cssMatch[1] : '';
     const jsCode = jsMatch ? jsMatch[1] : '';
