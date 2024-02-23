@@ -15,3 +15,8 @@
 - Video and Image linting for NSFW
 - Detect NSFW text/content on page before upload
 - Smart contract to host the entire service with direct donation tool to fund the project
+- AI Audio Generation. Will be limited to 200 characters per user per month inorder to ensure 50 users may test out the product. Once funds are setup we will increase this limit as high as possible!
+
+Alot of what I want done is a TODO list that will never end, so use this as a memory bank for ideas to implement but not in any particular order unless otherwise specified.
+
+Given in about a year or two one may hand off the Readme to an AI to complete we are in the clear for all features go! :)
