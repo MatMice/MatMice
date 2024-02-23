@@ -9,11 +9,16 @@ import { JSDOM } from 'jsdom';
 import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
 import { createClient } from 'redis';
+import { minify as minifyHtml } from 'html-minifier';
+import postcss from 'postcss';
+import cssnano from 'cssnano';
+import { minify } from 'terser'; // Corrected import for terser
+import { ESLint } from 'eslint';
 
 dotenv.config(); // Load environment variables from .env file
 
 const client = createClient({
-    url: process.env.REDIS_URL
+    url: process.env.REDIS_EXTERNAL
 });
 
 client.on('connect', function() {
@@ -38,6 +43,35 @@ app.use((err, req, res, next) => {
     res.status(500).send('Internal Server Error');
 });
 
+
+//
+const eslint = new ESLint({
+    useEslintrc: false,
+    baseConfig: {
+        extends: ['eslint:recommended'],
+        rules: {
+            "no-unused-vars": "warn",
+            "no-undef": "off"
+        }
+    },
+});
+const sanitizeJs = async (js) => {
+    const results = await eslint.lintText(js);
+    const formatter = await eslint.loadFormatter('stylish');
+    const resultText = formatter.format(results);
+
+    const hasCriticalIssue = results.some(result => result.messages.some(message => message.severity === 2));
+    if (hasCriticalIssue) {
+        console.log(`JavaScript code has critical issues:\n${resultText}`);
+        return '';
+    }
+    if (results.some(result => result.errorCount > 0)) {
+        console.log(`JavaScript code has errors:\n${resultText}`);
+    }
+
+    return js.replace(/\s/g, '');
+};
+
 // Apply rate limiting for /prompt and /register routes
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
@@ -45,6 +79,34 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again after a minute.',
 });
 
+
+//
+const minifyHtmlSnippet = (html) => {
+    const minifiedHtml = minifyHtml(html, {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeOptionalTags: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+    });
+
+    // Remove all newline characters
+    const htmlWithoutNewlines = minifiedHtml.replace(/\n/g, '');
+    return htmlWithoutNewlines;
+};
+const minifyCss = async (css) => {
+    const result = await postcss([cssnano]).process(css);
+    return result.css;
+};
+
+const minifyJs = (js) => {
+    const result = minify(js);
+    if (result.error) throw result.error;
+    return result.code;
+};
+//
 app.use('/prompt', limiter);
 app.use('/register', limiter);
 
@@ -63,7 +125,7 @@ app.get('/:username', async (req, res) => {
 
     if (snippet) {
         snippet = JSON.parse(snippet);
-        res.setHeader('Content-Security-Policy', `style-src 'sha256-${snippet.cssHash}' 'self';`);
+        res.setHeader('Content-Security-Policy', `style-src 'sha256-${snippet.cssHash}' script-src 'sha256-${snippet.jsHash}'`);
         res.send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -81,7 +143,7 @@ app.get('/:username', async (req, res) => {
                     <div id='${username}'>
                         ${snippet.htmlSnippet}
                     </div>
-                    <script>
+                    <script integrity='sha256-${snippet.jsHash}'>
                         ${snippet.jsSnippet}
                     </script>
                 </body>
@@ -100,18 +162,24 @@ app.post('/register', async (req, res) => {
     const username = req.body.username;
     let htmlSnippet = req.body.htmlSnippet;
     let cssSnippet = req.body.cssSnippet;
+    cssSnippet = await minifyCss(DOMPurify.sanitize(cssSnippet));
     let jsSnippet = req.body.jsSnippet;
+    console.log(jsSnippet)
+    jsSnippet = await sanitizeJs(jsSnippet) || '';
 
+    console.log(jsSnippet)
     // Calculate SHA-256 hash for CSS snippet
-    const cssHash = crypto.createHash('sha256').update(DOMPurify.sanitize(cssSnippet)).digest('base64');
-    const jsHash = crypto.createHash('sha256').update(DOMPurify.sanitize(jsSnippet)).digest('base64');
+    const cssHash = crypto.createHash('sha256').update(cssSnippet).digest('base64');
+    
+    const jsHash = crypto.createHash('sha256').update(jsSnippet).digest('base64');
 
     // Create the snippet object
     const snippet = {
-        htmlSnippet: DOMPurify.sanitize(htmlSnippet),
-        cssSnippet: DOMPurify.sanitize(cssSnippet),
-        jsSnippet: DOMPurify.sanitize(jsSnippet),
-        cssHash: cssHash
+        htmlSnippet: minifyHtmlSnippet(DOMPurify.sanitize(htmlSnippet)),
+        cssSnippet: cssSnippet,
+        jsSnippet: jsSnippet,
+        cssHash: cssHash,
+        jsHash: jsHash
     };
 
     try {
