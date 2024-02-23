@@ -224,7 +224,26 @@ app.post('/register', async (req, res) => {
 });
 
 // New endpoint to handle random page request
-app.get('/random/page', (req, res) => {
+app.get('/random/page', async (req, res) => {
+    try {
+        const usernames = await client.keys('*');
+        if (usernames.length > 0) {
+            const randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
+
+            // Validate the randomUsername before redirection
+            if (validator.isAlphanumeric(randomUsername)) {
+                res.redirect(`/${randomUsername}`);
+            } else {
+                res.status(500).send('Invalid username for redirection');
+            }
+        } else {
+            res.status(404).send('No pages available');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+    /*
     const usernames = Object.keys(storedSnippets);
     if (usernames.length > 0) {
         const randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
@@ -238,6 +257,7 @@ app.get('/random/page', (req, res) => {
     } else {
         res.status(404).send('No pages available');
     }
+    */
 });
 
 
