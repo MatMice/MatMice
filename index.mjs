@@ -18,7 +18,7 @@ import { ESLint } from 'eslint';
 dotenv.config(); // Load environment variables from .env file
 
 const client = createClient({
-    url: process.env.REDIS_EXTERNAL
+    url: process.env.REDIS_URL
 });
 
 client.on('connect', function() {
