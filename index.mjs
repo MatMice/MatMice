@@ -75,7 +75,7 @@ const sanitizeJs = async (js) => {
 // Apply rate limiting for /prompt and /register routes
 const limiter = rateLimit({
     windowMs: 60 * 1000, // 1 minute
-    max: 3, // Limit each IP to 1 requests per minute
+    max: process.env.RATE_LIMIT, // Limit each IP to 1 requests per minute
     message: 'Too many requests from this IP, please try again after a minute.',
 });
 
