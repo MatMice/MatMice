@@ -4,7 +4,7 @@ import cssnano from 'cssnano';
 import { minify } from 'terser'; // Corrected import for terser
 import { ESLint } from 'eslint';
 import rateLimit from 'express-rate-limit';
-
+import puppeteer from 'puppeteer';
 //unused?
 import cookieParser from 'cookie-parser';
 
@@ -142,3 +142,12 @@ export async function parse_api_response(api_data) {
         jsCode,
     };
 }
+
+export async function take_screenshot(html) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setContent(html);
+    const screenshot = await page.screenshot({ encoding: 'base64' });
+    await browser.close();
+    return screenshot;
+  }

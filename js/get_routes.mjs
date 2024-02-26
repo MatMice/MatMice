@@ -100,5 +100,23 @@ router.get('/random/page', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+router.get('/all/sites', async (req, res) => {
+    try {
+        // Get all keys from Redis
+        const keys = await req.redis_client.keys('*');
 
+        // Get all snippets from Redis
+        const snippets = [];
+        for (const key of keys) {
+            const snippet = JSON.parse(await req.redis_client.get(key));
+            snippets.push({ username: key, ...snippet });
+        }
+
+        // Render the 'sites' view, passing the snippets
+        res.render('sites', { snippets: snippets });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 export default router;

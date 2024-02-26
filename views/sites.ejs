@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .site {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            text-align: center;
+        }
+        .site img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <% snippets.forEach(snippet => { %>
+            <div class="site">
+                <img src="data:image/png;base64,<%= snippet.screenshot %>" alt="<%= snippet.username %>">
+                <a href="/<%= snippet.username %>""><%= snippet.username %></a>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>

@@ -6,6 +6,7 @@ import get_routes from './js/get_routes.mjs';
 import post_routes from './js/post_routes.mjs';
 
 //Third Party Libraries
+import path from 'path';
 import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -61,6 +62,10 @@ app.use((req, res, next) => {
     req.redis_client = client;
     next();
 });
+//
+app.set('view engine', 'ejs');
+
+
 //
 app.use(get_routes);
 app.use(post_routes);
