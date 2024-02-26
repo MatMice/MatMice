@@ -8,75 +8,57 @@
     	<meta name="viewport" 
 				content="width=device-width, initial-scale=1.0">
     	<title>MatMice-like Web Maker</title>
-    	<link rel="stylesheet" href="style.css">
+    	<link rel="stylesheet" href="./stylesheets/style.css">
 	</head>
 	<body>
-
+		<div>
+			
+		</div>
     	<div id="container">
         	<!-- Navigation buttons -->
-        	<div id="nav-buttons">
+        	<nav id="nav-buttons">
             	<a href="/">Home</a> |
-            	<a href="/signup">Signup</a> |
-            	<a href="/members">Members</a> |
-            	<a href="/cool-pages">Cool Pages</a> |
-            	<a href="/grownups">Grownups</a> |
-            	<a href="/about">About</a> |
-            	<a href="/help">Help</a> |
-				<a href="/random/page">Random Page</a>
-        	</div>
-	
-        	<h1>MatMice ~ Kids Web Development Tool</h1>
-        	<p id="playAudioParagraph" title="Click here to read as audio">
-				This product is currently in its development phase and is available for use 
-				free of charge, indefinitely. Please be aware that all sites created at this 
-				time will be subject to deletion. To maintain system integrity, we kindly request
-				that you limit your submissions to one page per minute and one prompt per minute.
-				We appreciate your understanding and patience as we continue to enhance and refine
-				our site's functionality.
-			</p>
-			<h2>Coming soon...</h2>
-			<ul>
-				<li>Email to feature (Email finished web page to yourself or parent!)</li>
-				<li>Token based validation for users (No register/login!)</li>
-				<li>Saving/Loading from local and to Gdrive</li>
-				<li>UI Sandbox editor</li>
-				<li>Image Generation Tools</li>
-				<li>Audio/Voice Generation Tools</li>
-				<li>and much... much more!</li>
-			</ul>
-			<audio id="welcomeAudio" src="/welcome.mp3" type="audio/mpeg" style="display: none;">
-				Your browser does not support the audio element.
-			</audio>
+            	<a href="/sites">Sites</a> |
+				<a class="rainbow_hover" href="/random/page">Random Page</a>
+			</nav>
         	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
 	
-            	<label for="username">Choose a username:</label>
-            	<input type="text" id="username" name="username" required>
-            	<br>
+				<div class="textarea-container">
+					<div>
+						<label for="username">Username:</label>
+						<input type="text" id="username" name="username" required maxlength="64" style="width: 40vw;">	
+					</div>
+					<div>
+						<label for="description">Description:</label>
+						<input type="text" id="description" name="description" maxlength="2048" style="width: 50vw;">
+					</div>
+				</div>
             	
-            	<!-- HTML Textarea -->
-            	<label for="htmlSnippet">Your HTML:</label>
-            	<textarea id="htmlSnippet" name="htmlSnippet" rows="10" required></textarea>
-            	<br>
-	
-            	<!-- CSS Textarea -->
-            	<label for="cssSnippet">Your CSS:</label>
-            	<textarea id="cssSnippet" name="cssSnippet" rows="10" required></textarea>
-            	<br>
-	
-            	<!-- JavaScript Textarea -->
-            	<label for="jsSnippet">Your JavaScript:</label>
-            	<textarea id="jsSnippet" name="jsSnippet" rows="10" required></textarea>
-            	<br>
+            	<div class="textarea-container">
+					<!-- HTML Textarea -->
+					<div>
+					  <label for="htmlSnippet">Your HTML:</label>
+					  <textarea id="htmlSnippet" name="htmlSnippet" rows="10"></textarea>
+					</div>
+				  
+					<!-- CSS Textarea -->
+					<div>
+					  <label for="cssSnippet">Your CSS:</label>
+					  <textarea id="cssSnippet" name="cssSnippet" rows="10"></textarea>
+					</div>
+				  
+					<!-- JavaScript Textarea -->
+					<div>
+					  <label for="jsSnippet">Your JavaScript:</label>
+					  <textarea id="jsSnippet" name="jsSnippet" rows="10"></textarea>
+					</div>
+				  </div>
 
-				<label for="prompt">Leave empty for no AI modification</label>
+				<label for="prompt">Prompt the AI (Or leave empty!):</label>
 				<input type="text" id="prompt" name="prompt">
 
             	<input type="submit" value="Create Website">
         	</form>
-        	<div id="container">
-        	
-        
-    </div>
     	</div>
     	<div class="lines">
         	<div class="line"></div>
@@ -86,9 +68,9 @@
     	</div>
 		<!-- Footer -->
 		<footer>
-			<p>&copy; 2024 MatMice.Site All rights reserved. (Not affiliated with matmice.com or any other page!) Currently using ChatGPT 3.5, Gemini, and ElevenLabs (Will add onto this list... attributions)</p>
+			<p>&#127279; 2024 MatMice.Site </p>
 		</footer>
 	</body>
-	<script src="/script.js">
+	<script src="/javascript/script.js">
 	</script>
 </html>

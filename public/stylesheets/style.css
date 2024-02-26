@@ -49,7 +49,7 @@ body {
 
 #container {
     background-color: #f1f5f8; /* White container */
-    max-width: 800px;
+    max-width: 95vw;
     margin: 20px auto;
     padding: 20px;
     border-radius: 10px;
@@ -126,4 +126,79 @@ input[type="submit"]:hover {
 }
 #playAudioParagraph:hover {
     background-color: #4473f5;
+}
+
+
+#nav-buttons {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+#nav-buttons a {
+	margin: 0 10px;
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+#container form{
+    background-color: #f1f5f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#container form label{
+    display: block;
+    margin-bottom: 5px;
+}
+#container form input, #container form textarea{
+    width: calc(100% - 16px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#container form input[type="submit"]{
+    background-color: #0077cc;
+    color: white;
+    cursor: pointer;
+}
+#container form input[type="submit"]:hover{
+    background-color: #005580;
+}
+#container {
+    background-color: #7390e04d;
+}
+
+body {
+    height:100vh;
+}
+.textarea-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .textarea-container div {
+    width: 100%; /* Adjust as needed */
+  }
+.rainbow_hover:hover {
+    background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00e5);
+    background-size: 200%;
+    animation: rainbow 2s linear infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background-position 0.5s;
+  }
+  
+  @keyframes rainbow {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 100%;
+    }
 }
