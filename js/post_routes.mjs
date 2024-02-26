@@ -13,18 +13,23 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
     try {
         const username = req.body.username
-        const username_exists_in_redis_client = await req.redis_client.exists(username) ? 
-            true :
-            res.status(400).send('Username already exists')
+        const username_exists_in_redis_client = await req.redis_client.exists(username) 
+        if (username_exists_in_redis_client) {
+            res.status(400).send('Username already exists');
+            return;
+        }
 
         let htmlSnippet = req.body.htmlSnippet;
         let cssSnippet = req.body.cssSnippet;
         let jsSnippet = req.body.jsSnippet;
     
         const prompt = req.body.prompt;
-        const prompt_is_not_profane = isProfane(prompt) ?
-            res.status(400).send('Prompt contains profainty') :
-            true
+        const prompt_is_profane = isProfane(prompt)
+        if(prompt_is_profane) {
+            res.status(400).send('Prompt contains profanity');
+            return;
+        }
+
         const prompt_valid = prompt.length > 0 ? true : false;
         let promptResponse = "";
         if( prompt_valid ) {

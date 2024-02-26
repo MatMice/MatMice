@@ -13,3 +13,30 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.play();
     });
 });
+const promptInput = document.getElementById('prompt');
+  const speechButton = document.getElementById('speechButton');
+
+  let isRecording = false;
+
+  if (annyang) {
+    const commands = {
+      '*transcript': function(transcript) {
+        promptInput.value = transcript;
+      }
+    };
+
+    annyang.addCommands(commands);
+
+    speechButton.addEventListener('click', () => {
+      if (!isRecording) {
+        annyang.start();
+        speechButton.textContent = 'Stop Recording';
+      } else {
+        annyang.abort();
+        speechButton.textContent = 'Start Recording';
+      }
+      isRecording = !isRecording;
+    });
+  } else {
+    console.log('Speech recognition not supported');
+  }
