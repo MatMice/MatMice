@@ -11,9 +11,15 @@
             border: 1px solid #ccc;
             padding: 1rem;
             text-align: center;
+            background-color: #3fb9e25e; /* Light blue background */
+            transition: all 0.3s ease; /* Smooth transition for hover effect */
         }
         .site img {
             max-width: 100%;
+        }
+        .site:hover {
+            transform: scale(1.05); /* Slightly enlarge the site on hover */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
         }
     </style>
 </head>
@@ -22,9 +28,13 @@
         <% snippets.forEach(snippet => { %>
             <div class="site">
                 <img src="data:image/png;base64,<%= snippet.screenshot %>" alt="<%= snippet.username %>">
-                <a href="/<%= snippet.username %>""><%= snippet.username %></a>
+                <a href="/<%= snippet.username %>"><%= snippet.username %></a>
+                <button class="save-btn" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#128190;</button>
             </div>
         <% }) %>
     </div>
 </body>
+<script src="/javascript/home.js">
+
+</script>
 </html>

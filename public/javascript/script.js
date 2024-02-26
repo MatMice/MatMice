@@ -13,30 +13,32 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.play();
     });
 });
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.interimResults = true;
+
 const promptInput = document.getElementById('prompt');
-  const speechButton = document.getElementById('speechButton');
+const speechButton = document.getElementById('speechButton');
 
-  let isRecording = false;
+let isRecording = false;
 
-  if (annyang) {
-    const commands = {
-      '*transcript': function(transcript) {
-        promptInput.value = transcript;
-      }
-    };
-
-    annyang.addCommands(commands);
-
-    speechButton.addEventListener('click', () => {
-      if (!isRecording) {
-        annyang.start();
-        speechButton.textContent = 'Stop Recording';
-      } else {
-        annyang.abort();
-        speechButton.textContent = 'Start Recording';
-      }
-      isRecording = !isRecording;
-    });
+speechButton.addEventListener('click', () => {
+  if (!isRecording) {
+    recognition.start();
+    speechButton.textContent = 'Stop Recording';
   } else {
-    console.log('Speech recognition not supported');
+    recognition.stop();
+    speechButton.textContent = 'Start Recording';
   }
+  isRecording = !isRecording;
+});
+
+recognition.addEventListener('result', (event) => {
+  const transcript = Array.from(event.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+  promptInput.value = transcript;
+});
+
