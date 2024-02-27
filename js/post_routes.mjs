@@ -12,7 +12,8 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
     try {
-        const username = req.body.username
+        const username = req.body.username ? req.body.username.trim() : crypto.randomBytes(10).toString('hex');
+
         const username_exists_in_redis_client = await req.redis_client.exists(username) 
         if (username_exists_in_redis_client) {
             res.status(400).send('Username already exists');
