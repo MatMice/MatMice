@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
         const cssHash = crypto.createHash('sha256').update(cssSnippet).digest('base64');
         const jsHash = crypto.createHash('sha256').update(jsSnippet).digest('base64');
 
-        const image64 = req.body.imageName ? await generateImage(`${username}: ${prompt}`, 'stabilityai/stable-diffusion-xl-base-1.0') : '';
+        const image64 = req.body.imageName ? await generateImage(`${username} Safe For Kids: ${prompt}`, 'stabilityai/stable-diffusion-xl-base-1.0') : '';
 
         const screenshot = await take_screenshot(`
         <!DOCTYPE html>
