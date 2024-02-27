@@ -194,11 +194,27 @@ body {
     transition: background-position 0.5s;
   }
   
-  @keyframes rainbow {
+@keyframes rainbow {
     0% {
       background-position: 0%;
     }
     100% {
       background-position: 100%;
     }
+}
+
+@keyframes rainbow2 {
+    0% {color: red;}
+    14% {color: orange;}
+    28% {color: yellow;}
+    42% {color: lime;}
+    57% {color: blue;}
+    71% {color: indigo;}
+    85% {color: violet;}
+    100% {color: red;}
+}
+
+.slogan span {
+    animation: rainbow2 2s linear infinite;
+    font-size: 2em;
 }
