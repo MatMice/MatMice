@@ -1,44 +1,42 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const audio = document.getElementById('welcomeAudio');
-    const paragraph = document.getElementById('playAudioParagraph');
+    let emojiElements = document.querySelectorAll('.emoji');
+    let inputField = document.querySelector('#prompt');
 
-    // Try to autoplay the audio
-    audio.play().catch(function(error) {
-        // Autoplay was prevented. This is usually due to the browser's autoplay policy.
-        // Do nothing, the user can start the playback by clicking the paragraph.
+    emojiElements.forEach((element) => {
+        element.addEventListener('click', function(event) {
+            inputField.value += event.target.textContent;
+        });
     });
 
-    // Start the playback when the paragraph is clicked
-    paragraph.addEventListener('click', function() {
-        audio.play();
+    let dropElements = document.querySelectorAll('.droppable');
+    dropElements.forEach((element) => {
+        element.addEventListener('drop', function(event) {
+            drop(event);
+        });
+        element.addEventListener('dragover', function(event) {
+            allowDrop(event);
+        });
+    });
+
+    let dragElements = document.querySelectorAll('.draggable');
+    dragElements.forEach((element) => {
+        element.addEventListener('dragstart', function(event) {
+            drag(event);
+        });
     });
 });
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-recognition.interimResults = true;
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
 
-const promptInput = document.getElementById('prompt');
-const speechButton = document.getElementById('speechButton');
+function allowDrop(event) {
+    event.preventDefault();
+}
 
-let isRecording = false;
-
-speechButton.addEventListener('click', () => {
-  if (!isRecording) {
-    recognition.start();
-    speechButton.textContent = 'Stop Recording';
-  } else {
-    recognition.stop();
-    speechButton.textContent = 'Start Recording';
-  }
-  isRecording = !isRecording;
-});
-
-recognition.addEventListener('result', (event) => {
-  const transcript = Array.from(event.results)
-    .map(result => result[0])
-    .map(result => result.transcript)
-    .join('');
-  promptInput.value = transcript;
-});
-
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var emoji = document.getElementById(data).textContent;
+    event.target.value += emoji;
+}
