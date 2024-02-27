@@ -64,9 +64,7 @@ async function generateImage(prompt,model) {
           negative_prompt: 'blurry',
         }
       });
-      console.log(image)
-              // Convert Blob to Buffer
-              const buffer = Buffer.from(await image.arrayBuffer());
+      const buffer = Buffer.from(await image.arrayBuffer());
 
       // Encode image data as base64
       const base64Image = buffer.toString('base64')

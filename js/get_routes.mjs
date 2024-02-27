@@ -1,6 +1,6 @@
 import express from 'express';
 import validator from 'validator';
-
+import { log } from './util.mjs';
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -42,7 +42,7 @@ router.get('/:username', async (req, res) => {
     let snippet;
     try {
         snippet = await req.redis_client.get(username);
-        console.log(snippet);
+        log(snippet);
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');

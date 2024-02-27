@@ -30,6 +30,7 @@
             	<a href="/all/sites">Sites</a> |
 				<a class="rainbow_hover" href="/random/page">Random Page</a>
 			</nav>
+			
         	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
 	
 				<div class="textarea-container">
@@ -45,229 +46,34 @@
             	
             	<div class="textarea-container">
 					<!-- HTML Textarea -->
-					<div>
+					<div class="hidden">
 					  <label for="htmlSnippet">Your HTML:</label>
 					  <textarea id="htmlSnippet" name="htmlSnippet" rows="10"></textarea>
 					</div>
 				  
 					<!-- CSS Textarea -->
-					<div>
+					<div class="hidden">
 					  <label for="cssSnippet">Your CSS:</label>
 					  <textarea id="cssSnippet" name="cssSnippet" rows="10"></textarea>
 					</div>
 				  
 					<!-- JavaScript Textarea -->
-					<div>
+					<div class="hidden">
 					  <label for="jsSnippet">Your JavaScript:</label>
 					  <textarea id="jsSnippet" name="jsSnippet" rows="10"></textarea>
 					</div>
 				  </div>
 				<div class="input-container">
-					<label for="imageName">Image Name (Leave empty to NOT generate an image)</label>
-					<input class="droppable" type="text" id="imageName" name="imageName">
+					<label for="imageName">Generate Image</label>
+					<input class="droppable" type="checkbox" id="imageName" name="imageName">
 				</div>
-				<div id="emojis">
-					<span draggable="true" class="draggable emoji" id="emoji1">😀</span>
-					<span draggable="true" class="draggable emoji" id="emoji2">😂</span>
-					<span draggable="true" class="draggable emoji" id="emoji3">😍</span>
-					<span draggable="true" class="draggable emoji" id="emoji4">🐶</span>
-					<span draggable="true" class="draggable emoji" id="emoji5">🐱</span>
-					<span draggable="true" class="draggable emoji" id="emoji6">🐭</span>
-					<span draggable="true" class="draggable emoji" id="emoji7">🐹</span>
-					<span draggable="true" class="draggable emoji" id="emoji8">🐰</span>
-					<span draggable="true" class="draggable emoji" id="emoji9">🦊</span>
-					<span draggable="true" class="draggable emoji" id="emoji10">🐻</span>
-					<span draggable="true" class="draggable emoji" id="emoji11">🐼</span>
-					<span draggable="true" class="draggable emoji" id="emoji12">🐨</span>
-					<span draggable="true" class="draggable emoji" id="emoji13">🐯</span>
-					<span draggable="true" class="draggable emoji" id="emoji14">🦁</span>
-					<span draggable="true" class="draggable emoji" id="emoji15">🐮</span>
-					<span draggable="true" class="draggable emoji" id="emoji16">🐷</span>
-					<span draggable="true" class="draggable emoji" id="emoji17">🐸</span>
-					<span draggable="true" class="draggable emoji" id="emoji18">🐵</span>
-					<span draggable="true" class="draggable emoji" id="emoji19">🍎</span>
-					<span draggable="true" class="draggable emoji" id="emoji20">🍌</span>
-					<span draggable="true" class="draggable emoji" id="emoji21">🍒</span>
-					<span draggable="true" class="draggable emoji" id="emoji22">🍓</span>
-					<span draggable="true" class="draggable emoji" id="emoji23">🥦</span>
-					<span draggable="true" class="draggable emoji" id="emoji24">🥕</span>
-					<span draggable="true" class="draggable emoji" id="emoji25">🍕</span>
-					<span draggable="true" class="draggable emoji" id="emoji26">🍔</span>
-					<span draggable="true" class="draggable emoji" id="emoji27">🍟</span>
-					<span draggable="true" class="draggable emoji" id="emoji28">🍩</span>
-					<span draggable="true" class="draggable emoji" id="emoji29">🍪</span>
-					<span draggable="true" class="draggable emoji" id="emoji30">🎈</span>
-					<span draggable="true" class="draggable emoji" id="emoji31">🎉</span>
-					<span draggable="true" class="draggable emoji" id="emoji32">🎁</span>
-					<span draggable="true" class="draggable emoji" id="emoji33">🎄</span>
-					<span draggable="true" class="draggable emoji" id="emoji34">🎃</span>
-					<span draggable="true" class="draggable emoji" id="emoji35">🎆</span>
-					<span draggable="true" class="draggable emoji" id="emoji36">🎇</span>
-					<span draggable="true" class="draggable emoji" id="emoji37">🎈</span>
-					<span draggable="true" class="draggable emoji" id="emoji38">🎊</span>
-					<span draggable="true" class="draggable emoji" id="emoji39">🎋</span>
-					<span draggable="true" class="draggable emoji" id="emoji40">🎍</span>
-					<span draggable="true" class="draggable emoji" id="emoji41">🎎</span>
-					<span draggable="true" class="draggable emoji" id="emoji42">🎏</span>
-					<span draggable="true" class="draggable emoji" id="emoji43">🎐</span>
-					<span draggable="true" class="draggable emoji" id="emoji44">🎑</span>
-					<span draggable="true" class="draggable emoji" id="emoji45">🎒</span>
-					<span draggable="true" class="draggable emoji" id="emoji46">🎓</span>
-					<span draggable="true" class="draggable emoji" id="emoji47">🎔</span>
-					<span draggable="true" class="draggable emoji" id="emoji48">🎕</span>
-					<span draggable="true" class="draggable emoji" id="emoji49">🎖</span>
-					<span draggable="true" class="draggable emoji" id="emoji50">🎗</span>
-					<span draggable="true" class="draggable emoji" id="emoji51">🎘</span>
-					<span draggable="true" class="draggable emoji" id="emoji52">🎙</span>
-					<span draggable="true" class="draggable emoji" id="emoji53">🎚</span>
-					<span draggable="true" class="draggable emoji" id="emoji54">🎛</span>
-					<span draggable="true" class="draggable emoji" id="emoji55">🎜</span>
-					<span draggable="true" class="draggable emoji" id="emoji56">🎝</span>
-					<span draggable="true" class="draggable emoji" id="emoji57">🎞</span>
-					<span draggable="true" class="draggable emoji" id="emoji58">🎟</span>
-					<span draggable="true" class="draggable emoji" id="emoji59">🎠</span>
-					<span draggable="true" class="draggable emoji" id="emoji60">🎡</span>
-					<span draggable="true" class="draggable emoji" id="emoji61">🎢</span>
-					<span draggable="true" class="draggable emoji" id="emoji62">🎣</span>
-					<span draggable="true" class="draggable emoji" id="emoji63">🎤</span>
-					<span draggable="true" class="draggable emoji" id="emoji64">🎥</span>
-					<span draggable="true" class="draggable emoji" id="emoji65">🎦</span>
-					<span draggable="true" class="draggable emoji" id="emoji66">🎧</span>
-					<span draggable="true" class="draggable emoji" id="emoji67">🎨</span>
-					<span draggable="true" class="draggable emoji" id="emoji68">🎩</span>
-					<span draggable="true" class="draggable emoji" id="emoji69">🎪</span>
-					<span draggable="true" class="draggable emoji" id="emoji70">🎫</span>
-					<span draggable="true" class="draggable emoji" id="emoji71">🎬</span>
-					<span draggable="true" class="draggable emoji" id="emoji72">🎭</span>
-					<span draggable="true" class="draggable emoji" id="emoji73">🎮</span>
-					<span draggable="true" class="draggable emoji" id="emoji74">🎯</span>
-					<span draggable="true" class="draggable emoji" id="emoji75">🎰</span>
-					<span draggable="true" class="draggable emoji" id="emoji76">🎱</span>
-					<span draggable="true" class="draggable emoji" id="emoji77">🎲</span>
-					<span draggable="true" class="draggable emoji" id="emoji78">🎳</span>
-					<span draggable="true" class="draggable emoji" id="emoji79">🎴</span>
-					<span draggable="true" class="draggable emoji" id="emoji80">🎵</span>
-					<span draggable="true" class="draggable emoji" id="emoji81">🎶</span>
-					<span draggable="true" class="draggable emoji" id="emoji82">🎷</span>
-					<span draggable="true" class="draggable emoji" id="emoji83">🎸</span>
-					<span draggable="true" class="draggable emoji" id="emoji84">🎹</span>
-					<span draggable="true" class="draggable emoji" id="emoji85">🎺</span>
-					<span draggable="true" class="draggable emoji" id="emoji86">🎻</span>
-					<span draggable="true" class="draggable emoji" id="emoji87">🎼</span>
-					<span draggable="true" class="draggable emoji" id="emoji88">🎽</span>
-					<span draggable="true" class="draggable emoji" id="emoji89">🎾</span>
-					<span draggable="true" class="draggable emoji" id="emoji90">🎿</span>
-					<span draggable="true" class="draggable emoji" id="emoji91">🏀</span>
-					<span draggable="true" class="draggable emoji" id="emoji92">🏁</span>
-					<span draggable="true" class="draggable emoji" id="emoji93">🏂</span>
-					<span draggable="true" class="draggable emoji" id="emoji94">🏃</span>
-					<span draggable="true" class="draggable emoji" id="emoji95">🏄</span>
-					<span draggable="true" class="draggable emoji" id="emoji96">🏅</span>
-					<span draggable="true" class="draggable emoji" id="emoji97">🏆</span>
-					<span draggable="true" class="draggable emoji" id="emoji98">🏇</span>
-					<span draggable="true" class="draggable emoji" id="emoji99">🏈</span>
-					<span draggable="true" class="draggable emoji" id="emoji100">🏉</span>
-					<span draggable="true" class="draggable emoji" id="emoji101">🏊</span>
-					<span draggable="true" class="draggable emoji" id="emoji102">🏋</span>
-					<span draggable="true" class="draggable emoji" id="emoji103">🏌</span>
-					<span draggable="true" class="draggable emoji" id="emoji104">🏍</span>
-					<span draggable="true" class="draggable emoji" id="emoji105">🏎</span>
-					<span draggable="true" class="draggable emoji" id="emoji106">🏏</span>
-					<span draggable="true" class="draggable emoji" id="emoji107">🏐</span>
-					<span draggable="true" class="draggable emoji" id="emoji108">🏑</span>
-					<span draggable="true" class="draggable emoji" id="emoji109">🏒</span>
-					<span draggable="true" class="draggable emoji" id="emoji110">🏓</span>
-					<span draggable="true" class="draggable emoji" id="emoji111">🏔</span>
-					<span draggable="true" class="draggable emoji" id="emoji112">🏕</span>
-					<span draggable="true" class="draggable emoji" id="emoji113">🏖</span>
-					<span draggable="true" class="draggable emoji" id="emoji114">🏗</span>
-					<span draggable="true" class="draggable emoji" id="emoji115">🏘</span>
-					<span draggable="true" class="draggable emoji" id="emoji116">🏙</span>
-					<span draggable="true" class="draggable emoji" id="emoji117">🏚</span>
-					<span draggable="true" class="draggable emoji" id="emoji118">🏛</span>
-					<span draggable="true" class="draggable emoji" id="emoji119">🏜</span>
-					<span draggable="true" class="draggable emoji" id="emoji120">🏝</span>
-					<span draggable="true" class="draggable emoji" id="emoji121">🏞</span>
-					<span draggable="true" class="draggable emoji" id="emoji122">🏟</span>
-					<span draggable="true" class="draggable emoji" id="emoji123">🏠</span>
-					<span draggable="true" class="draggable emoji" id="emoji124">🏡</span>
-					<span draggable="true" class="draggable emoji" id="emoji125">🏢</span>
-					<span draggable="true" class="draggable emoji" id="emoji126">🏣</span>
-					<span draggable="true" class="draggable emoji" id="emoji127">🏤</span>
-					<span draggable="true" class="draggable emoji" id="emoji128">🏥</span>
-					<span draggable="true" class="draggable emoji" id="emoji129">🏦</span>
-					<span draggable="true" class="draggable emoji" id="emoji130">🏧</span>
-					<span draggable="true" class="draggable emoji" id="emoji131">🏨</span>
-					<span draggable="true" class="draggable emoji" id="emoji132">🏩</span>
-					<span draggable="true" class="draggable emoji" id="emoji133">🏪</span>
-					<span draggable="true" class="draggable emoji" id="emoji134">🏫</span>
-					<span draggable="true" class="draggable emoji" id="emoji135">🏬</span>
-					<span draggable="true" class="draggable emoji" id="emoji136">🏭</span>
-					<span draggable="true" class="draggable emoji" id="emoji137">🏮</span>
-					<span draggable="true" class="draggable emoji" id="emoji138">🏯</span>
-					<span draggable="true" class="draggable emoji" id="emoji139">🏰</span>
-					<span draggable="true" class="draggable emoji" id="emoji140">🏱</span>
-					<span draggable="true" class="draggable emoji" id="emoji141">🏲</span>
-					<span draggable="true" class="draggable emoji" id="emoji142">🏳</span>
-					<span draggable="true" class="draggable emoji" id="emoji143">🏴</span>
-					<span draggable="true" class="draggable emoji" id="emoji144">🏵</span>
-					<span draggable="true" class="draggable emoji" id="emoji145">🏶</span>
-					<span draggable="true" class="draggable emoji" id="emoji146">🏷</span>
-					<span draggable="true" class="draggable emoji" id="emoji147">🏸</span>
-					<span draggable="true" class="draggable emoji" id="emoji148">🏹</span>
-					<span draggable="true" class="draggable emoji" id="emoji149">🏺</span>
-					<span draggable="true" class="draggable emoji" id="emoji150">🏻</span>
-					<span draggable="true" class="draggable emoji" id="emoji151">🏼</span>
-					<span draggable="true" class="draggable emoji" id="emoji152">🏽</span>
-					<span draggable="true" class="draggable emoji" id="emoji153">🏾</span>
-					<span draggable="true" class="draggable emoji" id="emoji154">🏿</span>
-					<span draggable="true" class="draggable emoji" id="emoji155">🐀</span>
-					<span draggable="true" class="draggable emoji" id="emoji156">🐁</span>
-					<span draggable="true" class="draggable emoji" id="emoji157">🐂</span>
-					<span draggable="true" class="draggable emoji" id="emoji158">🐃</span>
-					<span draggable="true" class="draggable emoji" id="emoji159">🐄</span>
-					<span draggable="true" class="draggable emoji" id="emoji160">🐅</span>
-					<span draggable="true" class="draggable emoji" id="emoji161">🐆</span>
-					<span draggable="true" class="draggable emoji" id="emoji162">🐇</span>
-					<span draggable="true" class="draggable emoji" id="emoji163">🐈</span>
-					<span draggable="true" class="draggable emoji" id="emoji164">🐉</span>
-					<span draggable="true" class="draggable emoji" id="emoji165">🐊</span>
-					<span draggable="true" class="draggable emoji" id="emoji166">🐋</span>
-					<span draggable="true" class="draggable emoji" id="emoji167">🐌</span>
-					<span draggable="true" class="draggable emoji" id="emoji168">🐍</span>
-					<span draggable="true" class="draggable emoji" id="emoji169">🐎</span>
-					<span draggable="true" class="draggable emoji" id="emoji170">🐏</span>
-					<span draggable="true" class="draggable emoji" id="emoji171">🐐</span>
-					<span draggable="true" class="draggable emoji" id="emoji172">🐑</span>
-					<span draggable="true" class="draggable emoji" id="emoji173">🐒</span>
-					<span draggable="true" class="draggable emoji" id="emoji174">🐓</span>
-					<span draggable="true" class="draggable emoji" id="emoji175">🐔</span>
-					<span draggable="true" class="draggable emoji" id="emoji176">🐕</span>
-					<span draggable="true" class="draggable emoji" id="emoji177">🐖</span>
-					<span draggable="true" class="draggable emoji" id="emoji178">🐗</span>
-					<span draggable="true" class="draggable emoji" id="emoji179">🐘</span>
-					<span draggable="true" class="draggable emoji" id="emoji180">🐙</span>
-					<span draggable="true" class="draggable emoji" id="emoji181">🐚</span>
-					<span draggable="true" class="draggable emoji" id="emoji182">🐛</span>
-					<span draggable="true" class="draggable emoji" id="emoji183">🐜</span>
-					<span draggable="true" class="draggable emoji" id="emoji184">🐝</span>
-					<span draggable="true" class="draggable emoji" id="emoji185">🐞</span>
-					<span draggable="true" class="draggable emoji" id="emoji186">🐟</span>
-					<span draggable="true" class="draggable emoji" id="emoji187">🐠</span>
-					<span draggable="true" class="draggable emoji" id="emoji188">🐡</span>
-					<span draggable="true" class="draggable emoji" id="emoji189">🐢</span>
-					<span draggable="true" class="draggable emoji" id="emoji190">🐣</span>
-					<span draggable="true" class="draggable emoji" id="emoji191">🐤</span>
-					<span draggable="true" class="draggable emoji" id="emoji192">🐥</span>
-					<span draggable="true" class="draggable emoji" id="emoji193">🐦</span>
-					<span draggable="true" class="draggable emoji" id="emoji194">🐧</span>
-					<span draggable="true" class="draggable emoji" id="emoji195">🐨</span>
-					<span draggable="true" class="draggable emoji" id="emoji196">🐩</span>
-					<span draggable="true" class="draggable emoji" id="emoji197">🐪</span>
-					<span draggable="true" class="draggable emoji" id="emoji198">🐫</span>
-					<span draggable="true" class="draggable emoji" id="emoji199">🐬</span>
+
+				<button id="prev-button">Prev</button>
+				<button id="next-button">Next</button>
+				<div id="emojis-container">
 				</div>
-				<label for="prompt">Prompt the AI (Or leave empty!):</label>
+
+				<label for="prompt">Gemini✨</label>
 				<input type="text" id="prompt" name="prompt" class="droppable">
             	<input type="submit" value="Create Website">
         	</form>

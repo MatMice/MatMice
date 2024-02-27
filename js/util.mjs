@@ -45,7 +45,7 @@ export async function sanitize_javascript(js) {
 
 export async function log(message, ...critical) {
     if(process.env.NODE_ENV === 'production' && !critical) return;
-    console.log( critical ? 
+    console.log( critical.length > 0 ? 
         `[${critical}]: ${message}` : 
         `[LOG]: ${message}`
     );
@@ -175,8 +175,6 @@ export async function generateImage(prompt,model) {
           negative_prompt: 'blurry',
         }
       });
-      console.log(image)
-              // Convert Blob to Buffer
         const buffer = Buffer.from(await image.arrayBuffer());
 
       // Encode image data as base64
