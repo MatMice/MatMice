@@ -101,6 +101,7 @@ router.get('/random/page', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
 router.get('/all/sites', async (req, res) => {
     try {
         // Get all keys from Redis
@@ -120,4 +121,23 @@ router.get('/all/sites', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+router.get('/redis/memory-info', (req, res) => {
+    req.redis_client.info('memory', function(err, reply) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            const memoryInfo = reply.split('\n').reduce((info, line) => {
+                const parts = line.split(':');
+                if (parts[1]) {
+                    info[parts[0]] = parts[1];
+                }
+                return info;
+            }, {});
+
+            res.send(memoryInfo);
+        }
+    });
+});
+
 export default router;

@@ -38,7 +38,11 @@
     </style>
 </head>
 <body>
+    <% if (process.env.NODE_ENV !== 'production') { %>
+        <button class="save-all-btn" alt="SaveAll">Save All &#128190;</button>
+    <% } %>        
     <div class="grid">
+   
         <% snippets.forEach(snippet => { %>
             <div class="site">
                 <img src="data:image/png;base64,<%= snippet.screenshot %>" alt="<%= snippet.username %>">
@@ -52,6 +56,7 @@
                 </div>
             </div>
         <% }) %>
+        
     </div>
 </body>
 <script src="/javascript/home.js">
