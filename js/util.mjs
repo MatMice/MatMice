@@ -1,3 +1,7 @@
+import { HfInference } from '@huggingface/inference'
+
+const hf = new HfInference(process.env.HF_API_KEY)
+
 import { minify as minifyHtml } from 'html-minifier';
 import postcss from 'postcss';
 import cssnano from 'cssnano';
@@ -160,3 +164,43 @@ export async function take_screenshot(html) {
     await browser.close();
     return screenshot;
   }
+
+
+export async function generateImage(prompt,model) {
+    try {
+      const image = await hf.textToImage({
+        inputs: prompt,
+        model: model,
+        parameters: {
+          negative_prompt: 'blurry',
+        }
+      });
+      console.log(image)
+              // Convert Blob to Buffer
+        const buffer = Buffer.from(await image.arrayBuffer());
+
+      // Encode image data as base64
+      const base64Image = buffer.toString('base64')
+  
+      // Create HTML response with image data
+      const html = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Generated Image</title>
+        </head>
+        <body>
+          <img src="data:image/png;base64,${base64Image}" alt="Generated Image">
+        </body>
+        </html>
+      `;
+  
+      return base64Image;
+    } catch (error) {
+      console.error("Error:", error);
+      return "Error generating image";
+    }
+  }
+  

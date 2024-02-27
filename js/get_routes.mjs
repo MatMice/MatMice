@@ -66,6 +66,7 @@ router.get('/:username', async (req, res) => {
                     <style integrity='sha256-${snippet.cssHash}'>${snippet.cssSnippet}</style>
                 </head>
                 <body>
+                    <img src="data:image/png;base64,${snippet.image64}" alt="">
                     <div id='${username}'>
                         ${snippet.htmlSnippet}
                     </div>

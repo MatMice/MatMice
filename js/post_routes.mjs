@@ -1,5 +1,5 @@
 import express from 'express';
-import { prompt_gemini, parse_api_response, sanitize_javascript, log, minify_html_snippet, take_screenshot} from './util.mjs';
+import { prompt_gemini, parse_api_response, sanitize_javascript, log, minify_html_snippet, take_screenshot, generateImage} from './util.mjs';
 import crypto from 'crypto';
 import { isProfane } from 'no-profanity';
 
@@ -49,7 +49,8 @@ router.post('/register', async (req, res) => {
         log(jsSnippet)
         const cssHash = crypto.createHash('sha256').update(cssSnippet).digest('base64');
         const jsHash = crypto.createHash('sha256').update(jsSnippet).digest('base64');
-    
+        const image64 = await generateImage(`${username}: ${prompt}`, 'stabilityai/stable-diffusion-xl-base-1.0');
+
         const screenshot = await take_screenshot(`
         <!DOCTYPE html>
         <html lang="en">
@@ -64,6 +65,7 @@ router.post('/register', async (req, res) => {
                         <style integrity='sha256-${cssHash}'>${cssSnippet}</style>
                     </head>
                     <body>
+                        <img src="data:image/png;base64,${image64}" alt="Generated Image">
                         <div id='${username}'>
                             ${htmlSnippet}
                         </div>
@@ -74,7 +76,9 @@ router.post('/register', async (req, res) => {
                 </html>
     `);
 
+
         const snippet = {
+            image64: image64,
             screenshot: screenshot,
             promptResponse: promptResponse,
             prompt: prompt,

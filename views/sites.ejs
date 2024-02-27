@@ -2,6 +2,7 @@
 <html>
 <head>
     <style>
+            
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -21,6 +22,19 @@
             transform: scale(1.05); /* Slightly enlarge the site on hover */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
         }
+        a {
+            color: #007BFF; /* Change the link color */
+            text-decoration: none; /* Remove the underline */
+            transition: color 0.3s ease; /* Add a transition effect when the color changes */
+        }
+
+        a:hover {
+            color: #0056b3; /* Change the link color on hover */
+        }
+
+        a:active {
+            color: #004085; /* Change the link color when it's being clicked */
+        }
     </style>
 </head>
 <body>
@@ -29,7 +43,13 @@
             <div class="site">
                 <img src="data:image/png;base64,<%= snippet.screenshot %>" alt="<%= snippet.username %>">
                 <a href="/<%= snippet.username %>"><%= snippet.username %></a>
-                <button class="save-btn" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#128190;</button>
+                <div>
+                <button class="heart-btn" alt="Heart" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#x2665;</button>
+           
+                <button class="retry-btn" alt="Re-prompt" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#8634;</button>
+           
+                <button class="save-btn" alt="Save" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#128190;</button>
+                </div>
             </div>
         <% }) %>
     </div>

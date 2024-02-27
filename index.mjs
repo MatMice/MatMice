@@ -22,8 +22,6 @@ const port = process.env.PORT || 3000; // Use PORT from environment variables or
 
 const client = createClient({ url: process.env.REDIS_URL })
 
-// Create a Redis JSON clientit looks like in
-console.log("HERE")
 client.on('connect', function() {
     log('Connected to Redis...');
 });
@@ -40,23 +38,7 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Internal Server Error');
 });
-app.use(async (req, res, next) => {
-    try {
-        /*
-        // Check if the userKey cookie is set
-        if (!req.cookies.userKey) {
-            // If not, generate a unique key based on their IP address
-            const userKey = await generate_user_key(req.ip);
 
-            // Set the userKey cookie
-            res.cookie('userKey', userKey, { maxAge: 900000, httpOnly: true });
-        }
-        */
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
 
 app.use((req, res, next) => {
     req.redis_client = client;
@@ -65,14 +47,59 @@ app.use((req, res, next) => {
 //
 app.set('view engine', 'ejs');
 
-
 //
 app.use(get_routes);
 app.use(post_routes);
 
-
 app.use('/prompt', limiter);
 app.use('/register', limiter);
+
+
+async function generateImage(prompt,model) {
+    try {
+      const image = await hf.textToImage({
+        inputs: prompt,
+        model: model,
+        parameters: {
+          negative_prompt: 'blurry',
+        }
+      });
+      console.log(image)
+              // Convert Blob to Buffer
+              const buffer = Buffer.from(await image.arrayBuffer());
+
+      // Encode image data as base64
+      const base64Image = buffer.toString('base64')
+  
+      // Create HTML response with image data
+      const html = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Generated Image</title>
+        </head>
+        <body>
+          <img src="data:image/png;base64,${base64Image}" alt="Generated Image">
+        </body>
+        </html>
+      `;
+  
+      return html;
+    } catch (error) {
+      console.error("Error:", error);
+      return "Error generating image";
+    }
+  }
+  
+  app.get("/test/hf", async (req, res) => {
+    const prompt = "Mat Mice Site Test Two";
+    const modelName = "stabilityai/stable-diffusion-xl-base-1.0";
+  
+    const html = await generateImage(prompt,modelName)
+    res.send(html);
+  });
 
 const startServer = async () => {
     try {
