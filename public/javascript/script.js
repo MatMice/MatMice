@@ -1,4 +1,4 @@
-
+const emoji_length = 1000;
     // Start and end points of the range based on Unicode values for emojis
     let start = 0x1F600;
     let end = 0xFF64F;
@@ -39,16 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Event listeners for panning or scrolling
 document.getElementById('next-button').addEventListener('click', function() {
-    console.log("HERE");
-    if(startIndex + 100 <= end) {
-        startIndex += 100;
+    if(startIndex + emoji_length <= end) {
+        startIndex += emoji_length;
         renderEmojis();
     }
 });
 
 document.getElementById('prev-button').addEventListener('click', function() {
-    if(startIndex - 100 >= start) {
-        startIndex -= 100;
+    if(startIndex - emoji_length >= start) {
+        startIndex -= emoji_length;
         renderEmojis();
     }
 });
@@ -79,7 +78,7 @@ function renderEmojis() {
     emojiContainer.innerHTML = ''; // Clear the container
     console.log(emojiContainer)
     
-    for(let i = startIndex; i < startIndex + 100 && i <= end; i++) {
+    for(let i = startIndex; i < startIndex + emoji_length && i <= end; i++) {
         let emojiElement = document.createElement('span');
         emojiElement.id = `emoji-${i}`;
         emojiElement.classList.add('emoji');
