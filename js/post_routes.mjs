@@ -2,7 +2,7 @@ import express from 'express';
 import { prompt_gemini, parse_api_response, sanitize_javascript, log, minify_html_snippet, take_screenshot, generateImage} from './util.mjs';
 import crypto from 'crypto';
 import { isProfane } from 'no-profanity';
-
+import emojiShortName from 'emoji-short-name';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 const window = new JSDOM('').window;
@@ -51,7 +51,17 @@ router.post('/register', async (req, res) => {
         const cssHash = crypto.createHash('sha256').update(cssSnippet).digest('base64');
         const jsHash = crypto.createHash('sha256').update(jsSnippet).digest('base64');
 
-        const image64 = req.body.imageName ? await generateImage(`${username}: ${prompt}`, 'stabilityai/stable-diffusion-xl-base-1.0') : '';
+        let replacedPrompt = "";
+        //for each character in prompt, check if it is an emoji, if it is, replace it with the shortname
+        for (let char of prompt) {
+            if (emojiShortName.hasOwnProperty(char)) {
+                replacedPrompt += emojiShortName[char] + " ";
+            } else {
+                replacedPrompt += char;
+            }
+        }
+        log(replacedPrompt)
+        const image64 = req.body.imageName ? await generateImage(`${username}: ${replacedPrompt}`, 'stabilityai/stable-diffusion-xl-base-1.0') : '';
 
         const screenshot = await take_screenshot(`
         <!DOCTYPE html>

@@ -220,3 +220,33 @@ body {
     animation: rainbow2 2s linear infinite;
     font-size: 2em;
 }
+
+#options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.option-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 50px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.form {
+    display: none;
+}
+
+.form:target {
+    display: block;
+}
+
+#advanced:checked ~ #advanced-options {
+    display: block;
+}

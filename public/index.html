@@ -30,52 +30,97 @@
             	<a href="/all/sites">Sites</a> |
 				<a class="rainbow_hover" href="/random/page">Random Page</a>
 			</nav>
-			
-        	<form action="/register" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
-	
-				<div class="textarea-container">
-					<div>
-						<label for="username">Username:</label>
-						<input type="text" id="username" name="username" maxlength="64" style="width: 40vw;">	
-					</div>
-					<div>
-						<label for="description">Description:</label>
-						<input type="text" id="description" name="description" maxlength="2048" style="width: 50vw;">
-					</div>
-				</div>
-            	
-            	<div class="textarea-container">
-					<!-- HTML Textarea -->
-					<div class="hidden">
-					  <label for="htmlSnippet">Your HTML:</label>
-					  <textarea id="htmlSnippet" name="htmlSnippet" rows="10"></textarea>
-					</div>
-				  
-					<!-- CSS Textarea -->
-					<div class="hidden">
-					  <label for="cssSnippet">Your CSS:</label>
-					  <textarea id="cssSnippet" name="cssSnippet" rows="10"></textarea>
-					</div>
-				  
-					<!-- JavaScript Textarea -->
-					<div class="hidden">
-					  <label for="jsSnippet">Your JavaScript:</label>
-					  <textarea id="jsSnippet" name="jsSnippet" rows="10"></textarea>
-					</div>
-				  </div>
-				<div class="input-container">
-					<label for="imageName">Generate Image (Warning! Not double filtered may result in NSFW currently!)</label>
-					<input class="droppable" type="checkbox" id="imageName" name="imageName">
-				</div>
+			<!-- Grid of buttons -->
+			<div id="options">
+				<a href="#story_form" class="option-button">📖 Story</a>
+				<a href="#registerForm" class="option-button">🌐 Site</a>
+				<a href="#form3" class="option-button">🖼️ Image</a>
+				<a href="#template_form" class="option-button">📄 Template</a>
+				<a href="#audio_form" class="option-button">🔊 Audio</a>
+				<a href="#video_form" class="option-button">🎥 Video</a>
 
-				<label for="prompt">Gemini✨</label>
-				<input type="text" id="prompt" name="prompt" class="droppable">
-            	<input type="submit" value="Create Website">
-        	</form>
-			<button id="prev-button">Prev</button>
-			<button id="next-button">Next</button>
-			<div id="emojis-container">
 			</div>
+			
+			<!-- Forms -->
+			<div id="forms">
+				<form id="story_form" class="form">
+					(Not working yet!)
+					<label for="pages">Number of Pages:</label>
+					<input type="number" id="pages" name="pages" min="1" max="3" required>
+				
+					<label for="story_prompt">Story Prompt:</label>
+					<textarea id="story_prompt" name="story_prompt" required></textarea>
+				
+					<label for="advanced">Show Advanced Options</label>
+					<input type="checkbox" id="advanced">
+				
+					<input type="submit" value="Submit">
+				</form>
+				<form action="/register" class = "form" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
+	
+					<div class="textarea-container">
+						<div>
+							<label for="username">Username:</label>
+							<input type="text" id="username" name="username" maxlength="64" style="width: 40vw;">	
+						</div>
+						<div>
+							<label for="description">Description:</label>
+							<input type="text" id="description" name="description" maxlength="2048" style="width: 50vw;">
+						</div>
+					</div>
+					
+					<div class="textarea-container">
+						<!-- HTML Textarea -->
+						<div class="hidden">
+						  <label for="htmlSnippet">Your HTML:</label>
+						  <textarea id="htmlSnippet" name="htmlSnippet" rows="10"></textarea>
+						</div>
+					  
+						<!-- CSS Textarea -->
+						<div class="hidden">
+						  <label for="cssSnippet">Your CSS:</label>
+						  <textarea id="cssSnippet" name="cssSnippet" rows="10"></textarea>
+						</div>
+					  
+						<!-- JavaScript Textarea -->
+						<div class="hidden">
+						  <label for="jsSnippet">Your JavaScript:</label>
+						  <textarea id="jsSnippet" name="jsSnippet" rows="10"></textarea>
+						</div>
+					  </div>
+					<div class="input-container">
+						<label for="imageName">Generate Image (Warning! Not double filtered may result in NSFW currently!)</label>
+						<input class="droppable" type="checkbox" id="imageName" name="imageName">
+					</div>
+	
+					<label for="prompt">Gemini✨</label>
+					<input type="text" id="prompt" name="prompt" class="droppable">
+					<input type="submit" value="Create Website">
+				</form>
+				<button id="prev-button">Prev</button>
+				<button id="next-button">Next</button>
+				<div id="emojis-container">
+				</div>
+				<form id="form3" class="form">
+					Coming Soon!
+				</form>
+				    <!-- Template form -->
+					<form id="template_form" class="form">
+						Coming soon!
+					</form>
+				
+					<!-- Audio form -->
+					<form id="audio_form" class="form">
+						Coming soon!
+					</form>
+				
+					<!-- Video form -->
+					<form id="video_form" class="form">
+						Coming soon?
+					</form>
+			</div>
+			
+        	
     	</div>
 
     	<div class="lines">
