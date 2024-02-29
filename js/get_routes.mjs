@@ -2,6 +2,9 @@ import express from 'express';
 import validator from 'validator';
 import { log } from './util.mjs';
 const router = express.Router();
+import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 
 router.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
@@ -54,35 +57,38 @@ router.get('/:username', async (req, res) => {
         switch (snippet.type) {
             case 'image':
                 res.setHeader('Content-Security-Policy', `img-src 'self' ${snippet.url}`);
-                res.send(`
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>${username}</title>
-                                </head>
-                                <body>
-                                    <img src="${snippet.url}" alt="">
-                                </body>
-                            </html>
-                `);
+
+                // Generate a unique file name for each request
+                const fileName = `${snippet.image_name ? snippet.image_name : Date.now()}.jpg`;
+                const filePath = path.join(process.cwd(), fileName);
+
+                await axios({
+                    url: snippet.url,
+                    responseType: 'stream',
+                })
+                    .then(response =>
+                        new Promise((resolve, reject) => {
+                            response.data
+                                .pipe(fs.createWriteStream(filePath))
+                                .on('finish', () => resolve())
+                                .on('error', e => reject(e));
+                        }),
+                    )
+                    .then(() => res.download(filePath))
+                    .catch(error => console.error(error));
+                
+                    //res.send({ url: snippet.url });
                 break;
             case 'site':
-                //I need the content policy to include the css and js hashes as well
+                //I need the content policy to include the css ans js hashes as well
 
                 res.setHeader('Content-Security-Policy', `img-src 'self' ${snippet.image_one}`);
                 res.render('site', { snippet: snippet });
                 break;
             case 'audio':
                 //nonono...
-                res.setHeader("Content-Security-Policy", "default-src 'self'; media-src 'self' data:; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'");
+                //res.setHeader("Content-Security-Policy", "default-src 'self'; media-src 'self' data:; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'");
 
-                //res.setHeader('Content-Security-Policy', "default-src 'self'; audio-src 'self' data:");
-                //res.render('audio', { snippet: snippet });
-                //instead can you send the audip file
-                //res.send(`data:audio/mpeg;base64,${snippet.audio}`);
                 res.setHeader('Content-Disposition', 'attachment; filename=audio.mp3');
                 res.setHeader('Content-Type', 'audio/mpeg');
                 const audioBuffer = Buffer.from(snippet.audio, 'base64');

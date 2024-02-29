@@ -147,7 +147,7 @@ router.post('/prompt_image', async (req, res) => {
         const url = upload_response["data"]["url"];
         log(url)
 
-        await req.redis_client.set(image_name, JSON.stringify({ type: "image", puppeteer_screenshot_url: url, url: url }));
+        await req.redis_client.set(image_name, JSON.stringify({ type: "image", image_name:image_name, puppeteer_screenshot_url: url, url: url }));
 
         res.redirect(`/${image_name}`)//res.send(image64);
     } catch (err) {
