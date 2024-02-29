@@ -61,7 +61,7 @@ router.get('/:username', async (req, res) => {
                 // Generate a unique file name for each request
                 const fileName = `${snippet.image_name ? snippet.image_name : Date.now()}.jpg`;
                 const filePath = path.join(process.cwd(), fileName);
-
+                // i dont like this either ^ v
                 await axios({
                     url: snippet.url,
                     responseType: 'stream',
@@ -74,8 +74,18 @@ router.get('/:username', async (req, res) => {
                                 .on('error', e => reject(e));
                         }),
                     )
-                    .then(() => res.download(filePath))
-                    .catch(error => console.error(error));
+                    .then(() => res.download(filePath, (err) => {
+                        if (err) {
+                            log(err,'error');
+
+                        }
+
+                        // Delete the file after it has been downloaded
+                        fs.unlink(filePath, (err) => {
+                            if (err) log(`Error deleting file: ${err}`);
+                        });
+                     }))
+                    .catch(error => log(error));
                 
                     //res.send({ url: snippet.url });
                 break;
