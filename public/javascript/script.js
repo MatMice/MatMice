@@ -6,12 +6,26 @@ const emoji_length = 1000;
     // Step 2: Create a variable for the start index
     let startIndex = start;
 
+    window.onhashchange = function() {
+        renderEmojis(); //not the best...
+    };
     function setupEmojiClick() {
         let emojiElements = document.querySelectorAll('.emoji');
-        let inputField = document.querySelector('#prompt');
-    
+        // Get the URL fragment identifier
+let hash = window.location.hash;
+
+// Remove the '#' from the start of the hash
+let formId = hash.substring(1);
+//replace word form with prompt
+formId = formId.replace('form', 'prompt');
+
+// Select the form with the corresponding ID
+let form = document.getElementById(formId);
+        let inputField = form;
+
         emojiElements.forEach((element) => {
             element.addEventListener('click', function(event) {
+                
                 inputField.value += event.target.textContent;
             });
         });
@@ -37,6 +51,7 @@ const emoji_length = 1000;
 document.addEventListener('DOMContentLoaded', function() {
 
 
+   
 // Event listeners for panning or scrolling
 document.getElementById('next-button').addEventListener('click', function() {
     if(startIndex + emoji_length <= end) {

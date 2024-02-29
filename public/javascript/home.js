@@ -1,12 +1,12 @@
-//So we probably will migrate away from running JS on the client and instead run it on the server...
 
 document.querySelectorAll('.save-btn').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         const url = this.getAttribute('data-url');
         const filename = this.getAttribute('data-filename');
         saveAsFile(url, filename);
     });
 });
+
 
 function saveAsFile(url, filename) {
     fetch(url)

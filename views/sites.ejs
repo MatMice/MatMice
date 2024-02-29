@@ -1,65 +1,89 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <style>
-            
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
         }
+
         .site {
             border: 1px solid #ccc;
             padding: 1rem;
             text-align: center;
-            background-color: #3fb9e25e; /* Light blue background */
-            transition: all 0.3s ease; /* Smooth transition for hover effect */
+            background-color: #3fb9e25e;
+            /* Light blue background */
+            transition: all 0.3s ease;
+            /* Smooth transition for hover effect */
         }
+
         .site img {
             max-width: 100%;
         }
+
         .site:hover {
-            transform: scale(1.05); /* Slightly enlarge the site on hover */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+            transform: scale(1.05);
+            /* Slightly enlarge the site on hover */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            /* Add a shadow on hover */
         }
+
         a {
-            color: #007BFF; /* Change the link color */
-            text-decoration: none; /* Remove the underline */
-            transition: color 0.3s ease; /* Add a transition effect when the color changes */
+            color: #007BFF;
+            /* Change the link color */
+            text-decoration: none;
+            /* Remove the underline */
+            transition: color 0.3s ease;
+            /* Add a transition effect when the color changes */
         }
 
         a:hover {
-            color: #0056b3; /* Change the link color on hover */
+            color: #0056b3;
+            /* Change the link color on hover */
         }
 
         a:active {
-            color: #004085; /* Change the link color when it's being clicked */
+            color: #004085;
+            /* Change the link color when it's being clicked */
         }
     </style>
 </head>
+
 <body>
-    <% if (process.env.NODE_ENV !== 'production') { %>
+    <% if (process.env.NODE_ENV !=='production' ) { %>
         <button class="save-all-btn" alt="SaveAll">Save All &#128190;</button>
-    <% } %>        
-    <div class="grid">
-   
-        <% snippets.forEach(snippet => { %>
-            <div class="site">
-                <img src="data:image/png;base64,<%= snippet.screenshot %>" alt="<%= snippet.username %>">
-                <a href="/<%= snippet.username %>"><%= snippet.username %></a>
-                <div>
-                <button class="heart-btn" alt="Heart" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#x2665;</button>
-           
-                <button class="retry-btn" alt="Re-prompt" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#8634;</button>
-           
-                <button class="save-btn" alt="Save" data-url="/<%= snippet.username %>" data-filename="<%= snippet.username %>.html">&#128190;</button>
-                </div>
+        <% } %>
+            <div class="grid">
+
+                <% snippets.forEach(snippet=> { %>
+                    <div class="site">
+                        <img src="<%= snippet.puppeteer_screenshot_url %>" alt="<%= snippet.username %>">
+                        <a href="/<%= snippet.username %>">
+                            <span>
+                                <%= snippet.type %>
+                            </span>
+                            <%= snippet.username %>
+                        </a>
+
+                        <div>
+                            <button class="heart-btn" alt="Heart" data-url="/<%= snippet.username %>"
+                                data-filename="<%= snippet.username %>.html">&#x2665;</button>
+
+                            <button class="retry-btn" alt="Re-prompt" data-url="/<%= snippet.username %>"
+                                data-filename="<%= snippet.username %>.html">&#8634;</button>
+
+                            <button class="save-btn" alt="Save" data-url="/<%= snippet.username %>"
+                                data-filename="<%= snippet.username %>.html">&#128190;</button>
+                        </div>
+                    </div>
+                    <% }) %>
+
             </div>
-        <% }) %>
-        
-    </div>
 </body>
 <script src="/javascript/home.js">
 
 </script>
+
 </html>

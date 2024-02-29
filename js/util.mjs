@@ -9,8 +9,6 @@ import { minify } from 'terser'; // Corrected import for terser
 import { ESLint } from 'eslint';
 import rateLimit from 'express-rate-limit';
 import puppeteer from 'puppeteer';
-//unused?
-import cookieParser from 'cookie-parser';
 
 export async function generate_user_key(ip) {
     return new Promise((resolve, reject) => {
@@ -44,48 +42,47 @@ export async function sanitize_javascript(js) {
 }
 
 export async function log(message, ...critical) {
-    if(process.env.NODE_ENV === 'production' && !critical) return;
-    console.log( critical.length > 0 ? 
-        `[${critical}]: ${message}` : 
+    if (process.env.NODE_ENV === 'production' && !critical) return;
+    console.log(critical.length > 0 ?
+        `[${critical}]: ${message}` :
         `[LOG]: ${message}`
     );
 }
 
 export async function prompt_gemini(prompt) {
-    log(prompt)
     const apiKey = process.env.GOOGLE_API_KEY;
 
-try {
-    const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            contents: [{
-                parts: [{
-                    text: `Please respond with three code blocks html,css,and js without any comments to make a website with the following prompt:${prompt}`,
+    try {
+        const apiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `Please respond with three code blocks html,css,and js without any comments to make a website with the following prompt:${prompt}`,
+                    }],
                 }],
-            }],
-        }),
-    });
+            }),
+        });
 
-    if (apiResponse.ok) {
-        const apiData = await apiResponse.json();
-        // Handle the API response as needed
+        if (apiResponse.ok) {
+            const apiData = await apiResponse.json();
+            // Handle the API response as needed
 
-        return apiData;
-        //res.status(200).json(apiData); // Send the API response back to the client or perform further processing
-    } else {
-        throw new Error(`API request failed with status: ${apiResponse.status}`);
+            return apiData;
+            //res.status(200).json(apiData); // Send the API response back to the client or perform further processing
+        } else {
+            throw new Error(`API request failed with status: ${apiResponse.status}`);
+        }
+    } catch (error) {
+        console.error('Error making API request:', error);
+        res.status(500).send('Internal Server Error');
     }
-} catch (error) {
-    console.error('Error making API request:', error);
-    res.status(500).send('Internal Server Error');
-}
 }
 
-export async function minify_html_snippet (html) {
+export async function minify_html_snippet(html) {
     const minifiedHtml = minifyHtml(html, {
         collapseWhitespace: true,
         removeComments: true,
@@ -101,12 +98,12 @@ export async function minify_html_snippet (html) {
     return htmlWithoutNewlines;
 }
 
-export const minifyCss = async (css) => {
+export const minify_cascading_style_sheets = async (css) => {
     const result = await postcss([cssnano]).process(css);
     return result.css;
 }
 
-export const minifyJs = (js) => {
+export const minify_javascript = (js) => {
     const result = minify(js);
     if (result.error) throw result.error;
     return result.code;
@@ -150,11 +147,11 @@ export async function parse_api_response(api_data) {
 export async function take_screenshot(html) {
     const browser = await puppeteer.launch({
         args: [
-            '--no-sandbox', 
-            '--disable-setuid-sandbox', 
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
             '--single-process',
             '--no-zygote'],
-        executablePath: process.env.NODE_ENV  === 'production' 
+        executablePath: process.env.NODE_ENV === 'production'
             ? process.env.PUPPETEER_EXECUTABLE_PATH
             : puppeteer.executablePath(),
     });
@@ -163,42 +160,41 @@ export async function take_screenshot(html) {
     const screenshot = await page.screenshot({ encoding: 'base64' });
     await browser.close();
     return screenshot;
-  }
+}
 
-
-export async function generateImage(prompt,model) {
+export async function generate_image(prompt, model) {
     try {
-      const image = await hf.textToImage({
-        inputs: prompt,
-        model: model,
-        parameters: {
-          negative_prompt: 'blurry',
-        }
-      });
+        const image = await hf.textToImage({
+            inputs: prompt,
+            model: model,
+            parameters: {
+                negative_prompt: 'blurry',
+            }
+        });
         const buffer = Buffer.from(await image.arrayBuffer());
 
-      // Encode image data as base64
-      const base64Image = buffer.toString('base64')
-  
-      // Create HTML response with image data
-      const html = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Generated Image</title>
-        </head>
-        <body>
-          <img src="data:image/png;base64,${base64Image}" alt="Generated Image">
-        </body>
-        </html>
-      `;
-  
-      return base64Image;
+        const base64Image = buffer.toString('base64')
+
+        return base64Image;
     } catch (error) {
-      console.error("Error:", error);
-      return "Error generating image";
+        log("Error:", error);
+        return "Error generating image";
     }
-  }
-  
+}
+
+export async function upload_image(image64) {
+    const apiUrl = 'https://api.imgbb.com/1/upload';
+
+    const formData = new FormData();
+    formData.append('key', process.env.IMGBB_API_KEY);
+    formData.append('image', await image64.replace("data:image/png;base64,", ""));
+
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await response.json();
+
+    return data;
+}

@@ -27,14 +27,14 @@
         	<!-- Navigation buttons -->
         	<nav id="nav-buttons">
             	<a href="/">Home</a> |
-            	<a href="/all/sites">Sites</a> |
+            	<a href="/all/sites">Creations</a> |
 				<a class="rainbow_hover" href="/random/page">Random Page</a>
 			</nav>
 			<!-- Grid of buttons -->
 			<div id="options">
 				<a href="#story_form" class="option-button">📖 Story</a>
-				<a href="#registerForm" class="option-button">🌐 Site</a>
-				<a href="#form3" class="option-button">🖼️ Image</a>
+				<a href="#site_form" class="option-button">🌐 Site</a>
+				<a href="#image_form" class="option-button">🖼️ Image</a>
 				<a href="#template_form" class="option-button">📄 Template</a>
 				<a href="#audio_form" class="option-button">🔊 Audio</a>
 				<a href="#video_form" class="option-button">🎥 Video</a>
@@ -56,7 +56,7 @@
 				
 					<input type="submit" value="Submit">
 				</form>
-				<form action="/register" class = "form" method="post" id="registerForm" enctype="application/x-www-form-urlencoded">
+				<form action="/register" class = "form" method="post" id="site_form" enctype="application/x-www-form-urlencoded">
 	
 					<div class="textarea-container">
 						<div>
@@ -93,16 +93,17 @@
 						<input class="droppable" type="checkbox" id="imageName" name="imageName">
 					</div>
 	
-					<label for="prompt">Gemini✨</label>
-					<input type="text" id="prompt" name="prompt" class="droppable">
+					<label for="site_prompt">Gemini✨</label>
+					<input type="text" id="site_prompt" name="site_prompt" class="droppable">
 					<input type="submit" value="Create Website">
 				</form>
-				<button id="prev-button">Prev</button>
-				<button id="next-button">Next</button>
-				<div id="emojis-container">
-				</div>
-				<form id="form3" class="form">
-					Coming Soon!
+				
+				<form action="/prompt_image" method="post" id="image_form" class="form">
+					<label for="prompt">Image Prompt✨</label>
+					<input type="text" id="image_prompt" name="image_prompt" class="droppable">
+					<label for="prompt">Image Name</label>
+					<input type="text" id="image_name" name="image_name" class="droppable">
+					<input type="submit" value="Create Image">
 				</form>
 				    <!-- Template form -->
 					<form id="template_form" class="form">
@@ -119,7 +120,9 @@
 						Coming soon?
 					</form>
 			</div>
-			
+			<button id="prev-button">Prev</button>
+			<button id="next-button">Next</button>
+			<div id="emojis-container"></div>
         	
     	</div>
 
