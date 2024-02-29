@@ -198,3 +198,13 @@ export async function upload_image(image64) {
 
     return data;
 }
+
+export async function generate_audio(text) {
+    const audio = await hf.textToSpeech({
+        model: 'facebook/musicgen-small',//'espnet/kan-bayashi_ljspeech_vits', //facebook/musicgen-small
+        inputs: text
+    })
+    log(audio)
+    return audio;
+
+}

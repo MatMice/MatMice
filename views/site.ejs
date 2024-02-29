@@ -8,10 +8,7 @@
     <title>
         <%= snippet.username %>
     </title>
-    <meta charset='UTF-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <style integrity='sha256-<%= snippet.cssHash %>'>
+    <style>
         <%=snippet.cssSnippet %>
     </style>
 </head>
@@ -21,9 +18,10 @@
     <div id='<%= snippet.username %>'>
         <%- snippet.htmlSnippet %>
     </div>
-    <script integrity='sha256-<%= snippet.jsHash %>'>
-        <% - snippet.jsSnippet %>
-    </script>
+
 </body>
+<script>
+<%- snippet.jsSnippet %>
+</script>
 
 </html>

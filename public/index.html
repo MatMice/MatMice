@@ -1,142 +1,153 @@
 <!-- Made with the help of ChatGPT 3.5 -->
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Kids AI Site Maker | MatMice.Site</title>
-		<meta name="description" content="MatMice.Site offers AI-powered tools for kids to create their own websites. It's fun, easy, and educational.">
-		<meta name="keywords" content="Kids, AI, Web Maker, Website Builder, MatMice, Educational Tools, Learning">
-		<meta name="robots" content="index, follow">
-    	<link rel="stylesheet" href="./stylesheets/style.css">
-	</head>
-	<body>
-		<div class="slogan">
-			<h1>
-				<span>M</span>achine 
-				<span>A</span>ssisted 
-				<span>T</span>echnology 
-				<span>M</span>aking 
-				<span>I</span>ntelligent 
-				<span>C</span>reative 
-				<span>E</span>xperiences
-			</h1>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI Site Maker | MatMice.Site</title>
+	<meta name="description"
+		content="MatMice.Site offers AI-powered tools for everyone to create their own websites. It's fun, easy, and educational.">
+	<meta name="keywords" content="AI, Web Maker, Website Builder, Educational Tools, Learning">
+	<meta name="robots" content="index, follow">
+	<link rel="stylesheet" href="./stylesheets/style.css">
+</head>
+
+<body>
+	<div class="slogan">
+		<h1>
+			<span>M</span>achine
+			<span>A</span>ssisted
+			<span>T</span>echnology
+			<span>M</span>aking
+			<span>I</span>ntelligent
+			<span>C</span>reative
+			<span>E</span>xperiences
+		</h1>
+	</div>
+	<div id="container">
+		<!-- Navigation buttons -->
+		<nav id="nav-buttons">
+			<a href="/">Home</a> |
+			<a href="/all/sites">Creations</a> |
+			<a class="rainbow_hover" href="/random/page">Random Page</a>
+		</nav>
+		<!-- Grid of buttons -->
+		<div id="options">
+			<a href="#story_form" class="option-button">📖 Story</a>
+			<a href="#site_form" class="option-button">🌐 Site</a>
+			<a href="#image_form" class="option-button">🖼️ Image</a>
+			<a href="#template_form" class="option-button">📄 Template</a>
+			<a href="#audio_form" class="option-button">🔊 Audio</a>
+			<a href="#video_form" class="option-button">🎥 Video</a>
+
 		</div>
-    	<div id="container">
-        	<!-- Navigation buttons -->
-        	<nav id="nav-buttons">
-            	<a href="/">Home</a> |
-            	<a href="/all/sites">Creations</a> |
-				<a class="rainbow_hover" href="/random/page">Random Page</a>
-			</nav>
-			<!-- Grid of buttons -->
-			<div id="options">
-				<a href="#story_form" class="option-button">📖 Story</a>
-				<a href="#site_form" class="option-button">🌐 Site</a>
-				<a href="#image_form" class="option-button">🖼️ Image</a>
-				<a href="#template_form" class="option-button">📄 Template</a>
-				<a href="#audio_form" class="option-button">🔊 Audio</a>
-				<a href="#video_form" class="option-button">🎥 Video</a>
 
-			</div>
-			
-			<!-- Forms -->
-			<div id="forms">
-				<form id="story_form" class="form">
-					(Not working yet!)
-					<label for="pages">Number of Pages:</label>
-					<input type="number" id="pages" name="pages" min="1" max="3" required>
-				
-					<label for="story_prompt">Story Prompt:</label>
-					<textarea id="story_prompt" name="story_prompt" required></textarea>
-				
-					<label for="advanced">Show Advanced Options</label>
-					<input type="checkbox" id="advanced">
-				
-					<input type="submit" value="Submit">
-				</form>
-				<form action="/register" class = "form" method="post" id="site_form" enctype="application/x-www-form-urlencoded">
-	
-					<div class="textarea-container">
-						<div>
-							<label for="username">Username:</label>
-							<input type="text" id="username" name="username" maxlength="64" style="width: 40vw;">	
-						</div>
-						<div>
-							<label for="description">Description:</label>
-							<input type="text" id="description" name="description" maxlength="2048" style="width: 50vw;">
-						</div>
-					</div>
-					
-					<div class="textarea-container">
-						<!-- HTML Textarea -->
-						<div class="hidden">
-						  <label for="htmlSnippet">Your HTML:</label>
-						  <textarea id="htmlSnippet" name="htmlSnippet" rows="10"></textarea>
-						</div>
-					  
-						<!-- CSS Textarea -->
-						<div class="hidden">
-						  <label for="cssSnippet">Your CSS:</label>
-						  <textarea id="cssSnippet" name="cssSnippet" rows="10"></textarea>
-						</div>
-					  
-						<!-- JavaScript Textarea -->
-						<div class="hidden">
-						  <label for="jsSnippet">Your JavaScript:</label>
-						  <textarea id="jsSnippet" name="jsSnippet" rows="10"></textarea>
-						</div>
-					  </div>
-					<div class="input-container">
-						<label for="imageName">Generate Image (Warning! Not double filtered may result in NSFW currently!)</label>
-						<input class="droppable" type="checkbox" id="imageName" name="imageName">
-					</div>
-	
-					<label for="site_prompt">Gemini✨</label>
-					<input type="text" id="site_prompt" name="site_prompt" class="droppable">
-					<input type="submit" value="Create Website">
-				</form>
-				
-				<form action="/prompt_image" method="post" id="image_form" class="form">
-					<label for="prompt">Image Prompt✨</label>
-					<input type="text" id="image_prompt" name="image_prompt" class="droppable">
-					<label for="prompt">Image Name</label>
-					<input type="text" id="image_name" name="image_name" class="droppable">
-					<input type="submit" value="Create Image">
-				</form>
-				    <!-- Template form -->
-					<form id="template_form" class="form">
-						Coming soon!
-					</form>
-				
-					<!-- Audio form -->
-					<form id="audio_form" class="form">
-						Coming soon!
-					</form>
-				
-					<!-- Video form -->
-					<form id="video_form" class="form">
-						Coming soon?
-					</form>
-			</div>
-			<button id="prev-button">Prev</button>
-			<button id="next-button">Next</button>
-			<div id="emojis-container"></div>
-        	
-    	</div>
+		<!-- Forms -->
+		<div id="forms">
+			<form id="story_form" class="form">
+				(Not working yet!)
+				<label for="pages">Number of Pages:</label>
+				<input type="number" id="pages" name="pages" min="1" max="3" required>
 
-    	<div class="lines">
-        	<div class="line"></div>
-        	<div class="line"></div>
-        	<div class="line"></div>
-        	<div class="line"></div>
-    	</div>
-		<!-- Footer -->
-		<footer>
-			<p>&#127279; 2024 MatMice.Site </p>
-		</footer>
-	</body>
-	<script src="/javascript/script.js">
-	</script>
+				<label for="story_prompt">Story Prompt:</label>
+				<textarea id="story_prompt" name="story_prompt" required></textarea>
+
+				<label for="advanced">Show Advanced Options</label>
+				<input type="checkbox" id="advanced">
+
+				<input type="submit" value="Submit">
+			</form>
+			<form action="/register" class="form" method="post" id="site_form"
+				enctype="application/x-www-form-urlencoded">
+
+				<div class="textarea-container">
+					<div>
+						<label for="username">Username:</label>
+						<input type="text" id="username" name="username" maxlength="64" style="width: 40vw;">
+					</div>
+					<div>
+						<label for="description">Description:</label>
+						<input type="text" id="description" name="description" maxlength="2048" style="width: 50vw;">
+					</div>
+				</div>
+
+				<div class="textarea-container">
+					<!-- HTML Textarea -->
+					<div class="hidden">
+						<label for="htmlSnippet">Your HTML:</label>
+						<textarea id="htmlSnippet" name="htmlSnippet" rows="10"></textarea>
+					</div>
+
+					<!-- CSS Textarea -->
+					<div class="hidden">
+						<label for="cssSnippet">Your CSS:</label>
+						<textarea id="cssSnippet" name="cssSnippet" rows="10"></textarea>
+					</div>
+
+					<!-- JavaScript Textarea -->
+					<div class="hidden">
+						<label for="jsSnippet">Your JavaScript:</label>
+						<textarea id="jsSnippet" name="jsSnippet" rows="10"></textarea>
+					</div>
+				</div>
+				<div class="input-container">
+					<label for="imageName">Generate Image (Warning! Not double filtered may result in NSFW
+						currently!)</label>
+					<input class="droppable" type="checkbox" id="imageName" name="imageName">
+				</div>
+
+				<label for="site_prompt">Gemini✨</label>
+				<input type="text" id="site_prompt" name="site_prompt" class="droppable">
+				<input type="submit" value="Create Website">
+			</form>
+
+			<form action="/prompt_image" method="post" id="image_form" class="form">
+				<label for="prompt">Image Prompt✨</label>
+				<input type="text" id="image_prompt" name="image_prompt" class="droppable">
+				<label for="prompt">Image Name</label>
+				<input type="text" id="image_name" name="image_name" class="droppable">
+				<input type="submit" value="Create Image">
+			</form>
+			<!-- Template form -->
+			<form id="template_form" class="form">
+				Coming soon!
+			</form>
+
+			<!-- Audio form -->
+			<form action="/prompt_audio" method="post" id="audio_form" class="form">
+				<label for="audio_prompt">Audio Prompt✨</label>
+				<input type="text" id="audio_prompt" name="audio_prompt" class="droppable">
+				<label for="audio_name">Audio Name</label>
+				<input type="text" id="audio_name" name="audio_name" class="droppable">
+				<input type="submit" value="Create Audio">
+				Coming soon!
+			</form>
+
+			<!-- Video form -->
+			<form id="video_form" class="form">
+				Coming soon?
+			</form>
+		</div>
+		<button id="prev-button">Prev</button>
+		<button id="next-button">Next</button>
+		<div id="emojis-container"></div>
+
+	</div>
+
+	<div class="lines">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</div>
+	<!-- Footer -->
+	<footer>
+		<p>&#127279; 2024 MatMice.Site </p>
+	</footer>
+</body>
+<script src="/javascript/script.js">
+</script>
+
 </html>

@@ -1,5 +1,5 @@
 import express from 'express';
-import { prompt_gemini, parse_api_response, sanitize_javascript, log, minify_html_snippet, take_screenshot, generate_image, upload_image } from './util.mjs';
+import { prompt_gemini, parse_api_response, sanitize_javascript, log, minify_html_snippet, take_screenshot, generate_image, upload_image, generate_audio } from './util.mjs';
 import crypto from 'crypto';
 import { isProfane } from 'no-profanity';
 import emojiShortName from 'emoji-short-name';
@@ -156,7 +156,45 @@ router.post('/prompt_image', async (req, res) => {
         return;
     }
 })
+async function blobToBase64(blob) {
+    const arrayBuffer = await blob.arrayBuffer();
+    return Buffer.from(arrayBuffer).toString('base64');
+}
+router.post('/prompt_audio', async (req, res) => {
+    try {
+        const username = req.body.audio_name ? req.body.audio_name.trim() : crypto.randomBytes(10).toString('hex');
+        //const username = req.body.username ? req.body.username.trim() : crypto.randomBytes(10).toString('hex');
 
+        const prompt = req.body.audio_prompt;
+        const prompt_is_profane = isProfane(prompt)
+        if (prompt_is_profane) {
+            res.status(400).send('Prompt contains profanity');
+            return;
+        }
+        //i need to convert the prompt to a shortname if
+        let replacedPrompt = "";
+        //for each character in prompt, check if it is an emoji, if it is, replace it with the shortname
+        for (let char of prompt) {
+            if (emojiShortName.hasOwnProperty(char)) {
+                replacedPrompt += emojiShortName[char] + " ";
+            } else {
+                replacedPrompt += char;
+            }
+        }
+        const audio = await generate_audio(`${username}: ${replacedPrompt}`);
+        log(audio)
+
+
+        const base64Audio = await blobToBase64(audio);
+        await req.redis_client.set(username, JSON.stringify({ type: "audio", audio: base64Audio }));
+
+        res.redirect(`/${username}`)
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+        return;
+    }
+})
 
 
 export default router;

@@ -76,6 +76,17 @@ router.get('/:username', async (req, res) => {
                 res.render('site', { snippet: snippet });
                 break;
             case 'audio':
+                //nonono...
+                res.setHeader("Content-Security-Policy", "default-src 'self'; media-src 'self' data:; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'");
+
+                //res.setHeader('Content-Security-Policy', "default-src 'self'; audio-src 'self' data:");
+                //res.render('audio', { snippet: snippet });
+                //instead can you send the audip file
+                //res.send(`data:audio/mpeg;base64,${snippet.audio}`);
+                res.setHeader('Content-Disposition', 'attachment; filename=audio.mp3');
+                res.setHeader('Content-Type', 'audio/mpeg');
+                const audioBuffer = Buffer.from(snippet.audio, 'base64');
+                res.send(audioBuffer);
                 break;
             case 'video':
                 break;
